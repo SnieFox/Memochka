@@ -1,0 +1,63 @@
+﻿@inject IHttpContextAccessor Accessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Memochka</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-black border-bottom box-shadow mb-3">
+            <div class="header-container main-container">
+                <a class="navbar-brand text-warning opacity-75 ms-5" asp-area="" asp-controller="Home" asp-action="MainPage">Memochka</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-flex justify-content-between">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link border border-primary ms-3 @(Accessor.HttpContext.Request.Path.Value == "/Home/MainPage" ? "active" : (Accessor.HttpContext.Request.Path.Value == "/" ? "active" : "" ) )" asp-controller="Home" asp-action="MainPage">Головна</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link border border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MemesHistory" ? "active" : "" )" asp-controller="Home" asp-action="MemesHistory">Історія Мемів</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link border border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/TopMemes" ? "active" : "" )" asp-controller="Home" asp-action="TopMemes">Топ Меми</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link border border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MemesOffer" ? "active" : "" )" asp-controller="Home" asp-action="MemesOffer">Запропонушка</a>
+                        </li>
+                    </ul>
+                    <div class="dropdown show">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            <img style="height: 30px; width: 30px;" src="@Url.Content("~/images/UserCab.png")" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Sign In</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="main-container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
