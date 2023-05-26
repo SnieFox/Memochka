@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\images\UserCab.png" />
+    <Content Remove="wwwroot\images\ViewsIcon.png" />
     <Content Remove="wwwroot\images\Пример мем.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="wwwroot\images\UserCab.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="wwwroot\images\ViewsIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="wwwroot\images\Пример мем.jpg">
@@ -23,6 +27,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\Fontello\" />
   </ItemGroup>
 
 </Project>
