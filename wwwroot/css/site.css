@@ -16,24 +16,24 @@ html {
   position: relative;
   min-height: 100%;
 }
-.col-md-5-custom {
+.col-md-4-custom {
     flex: 0 0 auto;
-    width: 41.66666667%;
+    width: 33.33333333%;
 }
 
 @media (max-width: 785px) {
-    .col-md-5-custom {
+    .col-md-4-custom {
         flex: 0 0 auto;
         width: 100%;
     }
 }
-.col-md-7-custom {
+.col-md-8-custom {
     flex: 0 0 auto;
-    width: 58.33333333%;
+    width: 66.66666667%;
 }
 
 @media (max-width: 785px) {
-    .col-md-7-custom {
+    .col-md-8-custom {
         flex: 0 0 auto;
         width: 100%;
     }
@@ -63,7 +63,7 @@ html {
 }*/
 @media (min-width: 785px) {
     .main-container {
-        max-width: 977px;
+        max-width: 1050px;
     }
 }
 
