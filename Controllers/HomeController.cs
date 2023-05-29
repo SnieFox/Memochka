@@ -18,7 +18,7 @@ namespace Memochka.Controllers
             return View();
         }
 
-        public IActionResult TopMemes()
+        public IActionResult News()
         {
             return View();
         }

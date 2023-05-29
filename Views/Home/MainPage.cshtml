@@ -28,7 +28,7 @@
                         {
                             <div class="carousel-item @(item.Title=="Topic 1"?"active":"")">
                                 <img src="@Url.Content("~/images/Пример мем.jpg")" class="d-block w-100 img-fluid" alt="...">
-                                <div style="right: 0; left: 5%" class="custom-carousel-caption mt-5 d-none d-md-block ">
+                                <div style="right: 0; left: 5%" class="custom-carousel-caption mt-5 d-md-block ">
                                     <div style="text-align: center;background: rgba(0,0,0, 0.4); max-width: 80px; max-height: 20px" class="mb-1 border-dark rounded-pill d-flex align-items-center">
                                         <i class="ms-2 bi bi-eye" style="max-width: 20px; max-height: 18px; margin-bottom: 4px"></i>
                                         <p class="fst-italic fs-6" style="margin-left: 5px;margin-bottom: 0">@(item.Views)k</p>
@@ -47,6 +47,41 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
+                </div>
+                @*Create Post / News*@
+                <div class="d-flex row mx-auto mt-5 mb-3">
+                    @*Create Post*@
+                    <div class="col-xl-5 col-lg-5 col-md-12 mb-3" style="">
+                        <div class=" d-block p-2 border">
+                            <div class="rounded-circle bg-black m-auto" style="max-width: 100px; max-height: 100px">
+                                <img src="images/WhitePensil.png" class="p-2" />
+                            </div>
+                            <div class="d-block mt-3 mb-3">
+                                <p class="my-2 " style="font-size: 30px; font-weight: 700">Стань автором!</p>
+                                <a role="button" aria-disabled="true" class="btn btn-dark mt-3" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                            </div>
+                        </div>
+                    </div>
+                    @*News*@
+                    <div class="col-xl-7 col-lg-7 col-md-12" style="padding-right: 0;padding-left: 0">
+                        @for (int i = 0; i < 2; i++)
+                        {
+                            <div class="d-flex @(i==0 ? "mb-3" : "")" style="width: 100%">
+                                <img src="images/Пример мем.jpg" class="custom-news-size" />
+                                <p style="font-size: 17px; font-weight: 500" class="ms-3">@top10news[top10news.Count - i-1].Title</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @*Top 5 posts*@
+                <div class="d-block mx-auto">
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <div class="d-flex mb-3">
+                            <img src="images/Пример мем.jpg" style="width: 50%;height: 50%" />
+                            <p class="ms-3" style="font-size: 18px; font-weight: 500">@top10news[i].Title</p>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

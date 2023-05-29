@@ -21,6 +21,18 @@ html {
     width: 33.33333333%;
 }
 
+.custom-news-size {
+    width: 60%;
+    height: 60%
+}
+
+@media (max-width: 992px) {
+    .custom-news-size {
+        width: 50%;
+        height: 50%
+    }
+}
+
 @media (max-width: 785px) {
     .col-md-4-custom {
         flex: 0 0 auto;
