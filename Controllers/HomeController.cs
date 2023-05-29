@@ -18,11 +18,11 @@ namespace Memochka.Controllers
             return View();
         }
 
-        public IActionResult News()
+        public IActionResult Articles()
         {
             return View();
         }
-        public IActionResult MemesHistory()
+        public IActionResult Memes()
         {
             return View();
         }

@@ -10,6 +10,7 @@
     <Content Remove="wwwroot\images\UserCab.png" />
     <Content Remove="wwwroot\images\ViewsIcon.png" />
     <Content Remove="wwwroot\images\Пример мем.jpg" />
+    <Content Remove="wwwroot\images\ПримерМем2.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,8 +21,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="wwwroot\images\Пример мем.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="wwwroot\images\ПримерМем2.jpg" />
   </ItemGroup>
 
   <ItemGroup>

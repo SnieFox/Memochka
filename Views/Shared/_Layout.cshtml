@@ -11,41 +11,42 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-black border-bottom box-shadow mb-3">
-            <div class="header-container main-container">
-                <a class="navbar-brand text-warning opacity-75 ms-5" asp-area="" asp-controller="Home" asp-action="MainPage">Memochka</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+<header>
+    <nav class="navbar navbar-expand-lg bg-black border-bottom box-shadow mb-3">
+            <div class="main-container header-container">
+                <a class="navbar-brand text-warning opacity-75 ms-5 me-3" asp-area="" asp-controller="Home" asp-action="MainPage">Memochka</a>
+                <button class="navbar-toggler me-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span>
+                        <img src="/images/togglerIcon.png" style="height: 30px; width: 30px"/>
+                    </span>
                 </button>
-                <div class="navbar-collapse collapse d-flex justify-content-between">
-                    <ul class="nav nav-pills">
+                <div class="collapse navbar-collapse"  id="navbarNavDropdown">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link border border-primary ms-3 @(Accessor.HttpContext.Request.Path.Value == "/Home/MainPage" ? "active" : (Accessor.HttpContext.Request.Path.Value == "/" ? "active" : "" ) )" asp-controller="Home" asp-action="MainPage">Головна</a>
+                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MainPage" ? "custom-active" : (Accessor.HttpContext.Request.Path.Value == "/" ? "custom-active" : "" ) )" asp-controller="Home" asp-action="MainPage">Головна</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MemesHistory" ? "active" : "" )" asp-controller="Home" asp-action="MemesHistory">Історія Мемів</a>
+                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/Memes" ? "custom-active" : "" )" asp-controller="Home" asp-action="Memes">Мемчики</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/TopMemes" ? "active" : "" )" asp-controller="Home" asp-action="News">Новини</a>
+                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/Articles" ? "custom-active" : "" )" asp-controller="Home" asp-action="Articles">Статті</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MemesOffer" ? "active" : "" )" asp-controller="Home" asp-action="MemesOffer">Запропонушка</a>
+                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MemesOffer" ? "custom-active" : "" )" asp-controller="Home" asp-action="MemesOffer">Запропонушка</a>
                         </li>
                     </ul>
-                    <div class="dropdown show">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                            <img style="height: 30px; width: 30px;" src="@Url.Content("~/images/UserCab.png")" />
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Sign In</a></li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="dropdown show ms-auto">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        <img style="height: 30px; width: 30px;" src="@Url.Content("~/images/UserCab.png")" />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Sign In</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
-    </header>
+</header>
     <div class="main-container">
         <main role="main" class="pb-3">
             @RenderBody()
