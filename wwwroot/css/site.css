@@ -38,16 +38,31 @@ html {
         flex: 0 0 auto;
         width: 100%;
     }
+    .col-md-8-custom {
+        flex: 0 0 auto;
+        width: 100%;
+    }
 }
 .col-md-8-custom {
     flex: 0 0 auto;
     width: 66.66666667%;
 }
-
+.memes-container {
+    flex: 0 0 32%;
+    width: 32%;
+}
+@media (max-width: 992px) {
+    .memes-container {
+        flex: 0 0 50%;
+        width: 50%;
+        margin: 0 auto;
+    }
+}
 @media (max-width: 785px) {
-    .col-md-8-custom {
-        flex: 0 0 auto;
+    .memes-container {
+        flex: 0 0 100%;
         width: 100%;
+        margin: 0 auto;
     }
 }
 .header-container {
