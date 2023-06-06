@@ -1,16 +1,18 @@
 ﻿using Memochka.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Memochka.Models.MemochkaDbContext;
 
 namespace Memochka.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly MemochkaContext _context;
+        public HomeController(ILogger<HomeController> logger, MemochkaContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult MainPage()
