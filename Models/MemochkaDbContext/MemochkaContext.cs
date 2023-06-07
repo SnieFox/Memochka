@@ -56,9 +56,10 @@ namespace Memochka.Models.MemochkaDbContext
                 .WithMany(a => a.ArticleParagraphs)
                 .HasForeignKey(ap => ap.ArticleId);
 
-            //Properties Configuring
+            
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlServer("name=ConnectionStrings:BaseConnection");
+        //Properties Configuring
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //    => optionsBuilder.UseSqlServer("name=ConnectionStrings:BaseConnection");
     }
 }

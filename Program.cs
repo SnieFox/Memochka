@@ -1,14 +1,19 @@
 using Memochka.Models.MemochkaDbContext;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddDbContext<MemochkaContext>(bd =>
-    bd.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddDbContext<MemochkaContext>(db =>
+    db.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Add Authentication 
+builder.Services.AddAuthentication(options =>
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
 
 var app = builder.Build();
 
@@ -22,10 +27,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

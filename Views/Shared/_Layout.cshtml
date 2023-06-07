@@ -37,11 +37,36 @@
                     </ul>
                 </div>
                 <div class="dropdown show ms-auto">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        <img style="height: 30px; width: 30px;" src="@Url.Content("~/images/UserCab.png")" />
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                        <img style="height: 30px; width: 30px;" src="@Url.Content("~/images/UserCab.png")"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Sign In</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li><a class="dropdown-item">Profile</a></li>
+                                <li><a class="dropdown-item">My Articles</a></li>
+                                <li><a class="dropdown-item">My Memes</a></li>
+                                <li><a class="dropdown-item">Admin Panel</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Sign Out</a></li>
+                            }
+                            else if (User.IsInRole("User"))
+                            {
+                                <li><a class="dropdown-item">Profile</a></li>
+                                <li><a class="dropdown-item">My Articles</a></li>
+                                <li><a class="dropdown-item">My Memes</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Sign Out</a></li>
+                            }
+                            else
+                            {
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Login">Sign In</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Login">Sign In</a></li>
+                        }
                     </ul>
                 </div>
             </div>

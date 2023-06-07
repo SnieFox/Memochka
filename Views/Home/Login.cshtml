@@ -1,0 +1,31 @@
+﻿@model Memochka.Models.Entities.User
+@{
+    ViewData["Title"] = "Sign In";
+}
+<div class="col-md-6 m-auto">
+    <div class=" d-flex">
+        <img src="/images/LoginImage.jpg" style="width: 250px; height: 250px" class="rounded-circle my-auto"/>
+        <form asp-controller="Home" asp-action="Login" class="pt-5 ms-auto">
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example1">Username</label>
+                <input asp-for="Login"id="form2Example1" class="form-control"/>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example2">Password</label>
+                <input asp-for="Password" type="password" id="form2Example2" class="form-control"/>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4 w-100">Sign in</button>
+
+            <!-- Register buttons -->
+            <div class="text-center">
+                <p>Not a member? <a href="#!">Sign Up</a></p>
+            </div>
+        </form>
+    </div>
+    
+</div>
