@@ -1,5 +1,8 @@
+using Memochka.Models.Entities;
 using Memochka.Models.MemochkaDbContext;
+using Memochka.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,6 +17,8 @@ builder.Services.AddDbContext<MemochkaContext>(db =>
 builder.Services.AddAuthentication(options =>
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
+builder.Services.AddTransient<ICreateUser<User>, UserService>();
+//builder.Services.AddIdentity<User, IdentityRole>();
 
 var app = builder.Build();
 

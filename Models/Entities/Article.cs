@@ -1,6 +1,6 @@
 ﻿namespace Memochka.Models.Entities
 {
-    public class Article
+    public record Article
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Memochka.Models.Entities
 {
-    public class MemePicture
+    public record MemePicture
     {
         public Guid Id { get; set; }
         public int MemeId { get; set; }
