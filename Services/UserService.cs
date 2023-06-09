@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Memochka.Services
 {
-    public class UserService : ICreateUser<User>
+    public class UserService : IUser<User>
     {
         private readonly MemochkaContext _context;
         public UserService(MemochkaContext context) => _context = context;
 
-        public Task<IdentityResult> ValidateAsync(User user)
+        public Task<IdentityResult> ValidateUserAsync(User user)
         {
             List<IdentityError> errors = new List<IdentityError>();
             if (_context.Users.Any(u => u.Login == user.Login))
@@ -35,6 +35,38 @@ namespace Memochka.Services
                 return Task.FromResult(IdentityResult.Success);
             }
             return Task.FromResult(IdentityResult.Failed(errors.ToArray()));
+        }
+
+        public async Task<IdentityResult> LoginUserAsync(User user, HttpContext context)
+        {
+            List<IdentityError> errors = new List<IdentityError>();
+
+            var userAuth = _context.Users.FirstOrDefault(u =>
+                u.Login == user.Login && u.Password == user.Password);
+            if (userAuth == null)
+            {
+                errors.Add(new IdentityError
+                {
+                    Description = "Неправильні дані."
+                });
+            }
+            if (errors.Count == 0)
+            {
+                var userRole = _context.Users
+                    .Include(u => u.Role)
+                    .Where(u => u.Role.Id == u.RoleId)
+                    .Select(r => r.Role.Roles)
+                    .FirstOrDefault();
+                await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(new ClaimsIdentity(
+                        new List<Claim>
+                        {
+                            new(ClaimTypes.Name, userAuth.Login),
+                            new(ClaimTypes.Role, userRole)
+                        }, CookieAuthenticationDefaults.AuthenticationScheme)));
+                return IdentityResult.Success;
+            }
+            return IdentityResult.Failed(errors.ToArray());
         }
 
     }

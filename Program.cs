@@ -17,7 +17,7 @@ builder.Services.AddDbContext<MemochkaContext>(db =>
 builder.Services.AddAuthentication(options =>
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
-builder.Services.AddTransient<ICreateUser<User>, UserService>();
+builder.Services.AddTransient<IUser<User>, UserService>();
 //builder.Services.AddIdentity<User, IdentityRole>();
 
 var app = builder.Build();

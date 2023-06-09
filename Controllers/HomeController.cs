@@ -17,8 +17,8 @@ namespace Memochka.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly MemochkaContext _context;
-        private readonly ICreateUser<User> _createUser;
-        public HomeController(ILogger<HomeController> logger, MemochkaContext context, ICreateUser<User> createUser)
+        private readonly IUser<User> _createUser;
+        public HomeController(ILogger<HomeController> logger, MemochkaContext context, IUser<User> createUser)
         {
             _createUser = createUser;
             _logger = logger;
@@ -36,7 +36,15 @@ namespace Memochka.Controllers
         public async Task<IActionResult> Login(User user)
         {
 
-            AuthorizeUserAsync(user);
+            var loginUser = await _createUser.LoginUserAsync(user, HttpContext);
+            if (!loginUser.Succeeded)
+            {
+                foreach (var error in loginUser.Errors)
+                {
+                    ModelState.AddModelError("Login", error.Description);
+                }
+                return View(user);
+            }
             return RedirectToAction("MainPage");
         }
 
@@ -49,7 +57,8 @@ namespace Memochka.Controllers
         [HttpPost]
         public async Task<IActionResult> Registration(User user)
         {
-            var createUser = await _createUser.ValidateAsync(user);
+            var createUser = await _createUser.ValidateUserAsync(user);
+            var loginUser = await _createUser.LoginUserAsync(user, HttpContext);
             if (!createUser.Succeeded)
             {
                 string errorMessge = string.Empty;
@@ -62,7 +71,14 @@ namespace Memochka.Controllers
                 }
                 return View(user);
             }
-            AuthorizeUserAsync(user);
+            if (!loginUser.Succeeded)
+            {
+                foreach (var error in loginUser.Errors)
+                {
+                    ModelState.AddModelError("Login", error.Description);
+                }
+                return View(user);
+            }
             return RedirectToAction("MainPage");
         }
 
@@ -70,39 +86,6 @@ namespace Memochka.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-
-        async Task<IdentityResult> AuthorizeUserAsync(User user)
-        {
-            List<IdentityError> errors = new List<IdentityError>();
-
-            var userAuth = _context.Users.FirstOrDefault(u =>
-                u.Login == user.Login && u.Password == user.Password);
-            if (userAuth == null)
-            {
-                errors.Add(new IdentityError
-                {
-                    Description = "Неправильні дані."
-                });
-            }
-            if (errors.Count == 0)
-            {
-                var userRole = _context.Users
-                    .Include(u => u.Role)
-                    .Where(u => u.Role.Id == u.RoleId)
-                    .Select(r => r.Role.Roles)
-                    .FirstOrDefault();
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(new ClaimsIdentity(
-                        new List<Claim>
-                        {
-                            new(ClaimTypes.Name, userAuth.Login),
-                            new(ClaimTypes.Role, userRole)
-                        }, CookieAuthenticationDefaults.AuthenticationScheme)));
-                return IdentityResult.Success;
-            }
-            return IdentityResult.Failed(errors.ToArray());
         }
     }
 }
