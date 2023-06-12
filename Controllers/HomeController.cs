@@ -36,6 +36,7 @@ namespace Memochka.Controllers
         {
             var userIdentity = HttpContext.User.Identity.Name;
             var user = _context.Users
+                .Include(r=>r.Role)
                 .Where(u => u.Login == userIdentity)
                 .FirstOrDefault();
             

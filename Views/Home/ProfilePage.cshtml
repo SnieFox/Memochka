@@ -24,21 +24,21 @@
             <div class="d-flex justify-content-center mt-4">
                 <div class="d-block text-center me-5">
                     <h4>Ім'я</h4>
-                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">Данііл</p>
+                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">@(Model.FirstName==null?"?????":Model.FirstName)</p>
                 </div>
                 <div class="d-block text-center">
                     <h4>Прізвище</h4>
-                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">Огороднік</p>
+                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">@(Model.LastName == null ? "?????" : Model.LastName)</p>
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4">
                 <div class="text-center me-5 mt-3">
                     <h4>Роль</h4>
-                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-danger">Адмін</p>
+                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-danger">@Model.Role.Roles</p>
                 </div>
                 <div class="text-center mt-3">
                     <h4>Логін</h4>
-                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">SnieFox</p>
+                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">@Model.Login</p>
                 </div>
             </div>
             <div>
