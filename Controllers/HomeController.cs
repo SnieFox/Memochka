@@ -17,10 +17,10 @@ namespace Memochka.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly MemochkaContext _context;
-        private readonly IUser<User> _createUser;
-        public HomeController(ILogger<HomeController> logger, MemochkaContext context, IUser<User> createUser)
+        private readonly IUser<User> _userServices;
+        public HomeController(ILogger<HomeController> logger, MemochkaContext context, IUser<User> userServices)
         {
-            _createUser = createUser;
+            _userServices = userServices;
             _logger = logger;
             _context = context;
         }
@@ -56,7 +56,7 @@ namespace Memochka.Controllers
         public async Task<IActionResult> Login(User user)
         {
 
-            var loginUser = await _createUser.LoginUserAsync(user, HttpContext);
+            var loginUser = await _userServices.LoginUserAsync(user, HttpContext);
             if (!loginUser.Succeeded)
             {
                 foreach (var error in loginUser.Errors)
@@ -71,8 +71,8 @@ namespace Memochka.Controllers
         [HttpPost]
         public async Task<IActionResult> Registration(User user)
         {
-            var createUser = await _createUser.ValidateUserAsync(user);
-            var loginUser = await _createUser.LoginUserAsync(user, HttpContext);
+            var createUser = await _userServices.ValidateUserAsync(user);
+            var loginUser = await _userServices.LoginUserAsync(user, HttpContext);
             if (!createUser.Succeeded)
             {
                 string errorMessge = string.Empty;

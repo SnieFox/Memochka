@@ -4,17 +4,81 @@
 }
 <div class="main-container my-5">
     <div class="row">
-        <div class="col-md-10 m-auto">
-            <div class="d-flex flex-wrap col-md-4 justify-content-center">
-                <div class="d-block">
-                    <p class="mx-auto text-center" style="font-size: 25px; font-weight: 500">@Model.FirstName @Model.LastName</p>
+        <div class="d-flex flex-wrap col-md-4">
+            <div style="position: fixed" class=" d-block mb-auto justify-content-center">
+                <div class="d-block text-center">
                     <p class="mx-auto text-center" style="font-size: 25px; font-weight: 500">@Model.Nickname</p>
                 </div>
-                <img src="/images/LoginImage.jpg" style="width: 250px; height: 250px" class="rounded-circle mx-auto"/>
-                <a role="button" aria-disabled="true" asp-action="SetProfileImage" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Додати фоточку</a>
+                <div class="d-flex justify-content-center">
+                    <img src="/images/LoginImage.jpg" style="width: 250px; height: 250px" class="rounded-circle mx-auto"/>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a role="button" aria-disabled="true" asp-action="SetProfileImage" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px; max-height: 54px">Додати фоточку</a>
+                </div>
             </div>
-            <div class="pt-5 d-block col-md-8 ms-auto">
-                <label></label>
+        </div>
+        <div class="pt-3 d-block col-md-8 ms-auto border-start">
+            <div class="d-flex justify-content-end">
+                <a role="button" aria-disabled="true" asp-action="" class="btn btn-dark me-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Редагувати дані</a>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <div class="d-block text-center me-5">
+                    <h4>Ім'я</h4>
+                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">Данііл</p>
+                </div>
+                <div class="d-block text-center">
+                    <h4>Прізвище</h4>
+                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">Огороднік</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <div class="text-center me-5 mt-3">
+                    <h4>Роль</h4>
+                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-danger">Адмін</p>
+                </div>
+                <div class="text-center mt-3">
+                    <h4>Логін</h4>
+                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">SnieFox</p>
+                </div>
+            </div>
+            <div>
+                <div class="mt-5">
+                    <p>
+                        <button class="btn btn-primary w-100" style="font-size: 20px; font-weight: 500" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Мемаси, які я залив...
+                        </button>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            @for (int i = 1; i < 5; i++)
+                            {
+                                <div class="d-flex border mt-3" style="max-height: 80px">
+                                    <img src="/images/Пример мем.jpg" style="width: 78px;height: 78px"/>
+                                    <p class="ms-3" style="font-size: 20px; font-weight: 500">Some placeholder content for the collapse component.</p>
+                                    <p class="mt-auto mb-0 me-1 text-secondary">17.04.23</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <p>
+                        <button class="btn btn-primary w-100" style="font-size: 20px; font-weight: 500" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+                            Статті, що я писав...
+                        </button>
+                    </p>
+                    <div class="collapse" id="collapseExample1">
+                        <div class="card card-body">
+                            @for (int i = 1; i < 5; i++)
+                            {
+                                <div class="d-flex border mt-3" style="max-height: 80px">
+                                    <img src="/images/Пример мем.jpg" style="width: 78px;height: 78px"/>
+                                    <p class="ms-3" style="font-size: 20px; font-weight: 500">Some placeholder content for the collapse component.</p>
+                                    <p class="mt-auto mb-0 me-1 text-secondary">17.04.23</p>
+                                </div>
+                            }                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
