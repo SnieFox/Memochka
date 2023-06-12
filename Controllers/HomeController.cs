@@ -32,6 +32,26 @@ namespace Memochka.Controllers
         public IActionResult Login() => View();
         public IActionResult Registration() => View();
 
+        public IActionResult ProfilePage()
+        {
+            var userIdentity = HttpContext.User.Identity.Name;
+            var user = _context.Users
+                .Where(u => u.Login == userIdentity)
+                .FirstOrDefault();
+            
+            return View(user);
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("MainPage");
+        }
+
+        public IActionResult SetProfileImage()
+        {
+            return RedirectToAction("ProfilePage");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(User user)
         {
@@ -45,12 +65,6 @@ namespace Memochka.Controllers
                 }
                 return View(user);
             }
-            return RedirectToAction("MainPage");
-        }
-
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("MainPage");
         }
 

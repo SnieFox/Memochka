@@ -1,0 +1,21 @@
+﻿@model Memochka.Models.Entities.User
+@{
+    ViewData["Title"] = "Profile";
+}
+<div class="main-container my-5">
+    <div class="row">
+        <div class="col-md-10 m-auto">
+            <div class="d-flex flex-wrap col-md-4 justify-content-center">
+                <div class="d-block">
+                    <p class="mx-auto text-center" style="font-size: 25px; font-weight: 500">@Model.FirstName @Model.LastName</p>
+                    <p class="mx-auto text-center" style="font-size: 25px; font-weight: 500">@Model.Nickname</p>
+                </div>
+                <img src="/images/LoginImage.jpg" style="width: 250px; height: 250px" class="rounded-circle mx-auto"/>
+                <a role="button" aria-disabled="true" asp-action="SetProfileImage" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Додати фоточку</a>
+            </div>
+            <div class="pt-5 d-block col-md-8 ms-auto">
+                <label></label>
+            </div>
+        </div>
+    </div>
+</div>

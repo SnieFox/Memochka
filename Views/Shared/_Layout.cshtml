@@ -45,7 +45,7 @@
                         {
                             if (User.IsInRole("Admin"))
                             {
-                                <li><a class="dropdown-item">Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="ProfilePage">Profile</a></li>
                                 <li><a class="dropdown-item">My Articles</a></li>
                                 <li><a class="dropdown-item">My Memes</a></li>
                                 <li><a class="dropdown-item">Admin Panel</a></li>
@@ -53,7 +53,7 @@
                             }
                             else if (User.IsInRole("User"))
                             {
-                                <li><a class="dropdown-item">Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="ProfilePage">Profile</a></li>
                                 <li><a class="dropdown-item">My Articles</a></li>
                                 <li><a class="dropdown-item">My Memes</a></li>
                                 <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Sign Out</a></li>

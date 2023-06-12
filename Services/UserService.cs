@@ -52,11 +52,9 @@ namespace Memochka.Services
             }
             if (errors.Count == 0)
             {
-                var userRole = _context.Users
-                    .Include(u => u.Role)
-                    .Where(u => u.Role.Id == u.RoleId)
-                    .Select(r => r.Role.Roles)
-                    .FirstOrDefault();
+                var userRole = _context.Roles
+                    .Where(u => u.Id== userAuth.RoleId)
+                    .Select(r=>r.Roles).FirstOrDefault();
                 await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(new ClaimsIdentity(
                         new List<Claim>
