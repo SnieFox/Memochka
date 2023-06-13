@@ -13,13 +13,76 @@
                     <img src="/images/LoginImage.jpg" style="width: 250px; height: 250px" class="rounded-circle mx-auto"/>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <a role="button" aria-disabled="true" asp-action="SetProfileImage" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px; max-height: 54px">Додати фоточку</a>
+                    <a role="button" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px; max-height: 54px">Додати фоточку</a>
                 </div>
             </div>
         </div>
         <div class="pt-3 d-block col-md-8 ms-auto border-start">
             <div class="d-flex justify-content-end">
-                <a role="button" aria-disabled="true" asp-action="" class="btn btn-dark me-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Редагувати дані</a>
+                <a role="button" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-dark me-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Редагувати дані</a>
+            </div>
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form asp-controller="Home" asp-action="UpdateUserData" class="pt-1">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Редагувати дані</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                @Html.HiddenFor(user => user.Id)
+                                <!-- Nickname input -->
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form2Example11">Username</label>
+                                    <input asp-for="Nickname" id="form2Example11" class="form-control" />
+                                    <span asp-validation-for="Nickname" class="text-danger h3" style="font-size: 15px"></span>
+                                </div>
+
+                                <!-- First Name input -->
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form2Example1">First Name</label>
+                                    <input asp-for="FirstName" asp- id="form2Example1" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger h3" style="font-size: 15px"></span>
+                                </div>
+
+                                <!-- Password input -->
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="form2Example2">Last Name</label>
+                                    <input asp-for="LastName" asp- id="form2Example1" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger h3" style="font-size: 15px"></span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                                <button type="submit" asp-action="UpdateUserData" class="btn btn-primary">Змінити</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form asp-controller="Home" asp-action="SetProfilePicture" class="pt-1">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel1">Змінити картинку профілю</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                @Html.HiddenFor(user => user.Id)
+                                <!-- File input -->
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="someId">Оберіть картинку</label>
+                                    <input id="someId" type="file" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                                <button type="submit" asp-action="SetProfilePicture" class="btn btn-primary">Змінити</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="d-flex justify-content-center mt-4">
                 <div class="d-block text-center me-5">

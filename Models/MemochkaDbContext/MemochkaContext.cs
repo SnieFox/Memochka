@@ -55,8 +55,6 @@ namespace Memochka.Models.MemochkaDbContext
                 .HasOne(ap => ap.Article)
                 .WithMany(a => a.ArticleParagraphs)
                 .HasForeignKey(ap => ap.ArticleId);
-
-            
         }
         //Properties Configuring
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

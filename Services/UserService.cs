@@ -67,5 +67,48 @@ namespace Memochka.Services
             return IdentityResult.Failed(errors.ToArray());
         }
 
+        public async Task<(bool IsSuccess, string ErrorMessage)> UpdateUserAsync(User user)
+        {
+            var userDb = await _context.Users
+                .FindAsync(user.Id);
+            if (userDb == null)
+                return (false, "Current user does not exist");
+            if (user.Nickname != userDb.Nickname)
+            {
+                if (_context.Users.Any(n => n.Nickname == user.Nickname))
+                    return (false, "Username already exists");
+            }
+            user = user with
+            {
+                Id = userDb.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Login = userDb.Login,
+                Nickname = userDb.Nickname,
+                Password = userDb.Password,
+                RoleId = userDb.RoleId
+            };
+            _context.Entry(userDb).CurrentValues.SetValues(user);
+            var saved = await _context.SaveChangesAsync();
+            return saved == 0
+                ? (false, "Something went wrong when saving data to db")
+                : (true, string.Empty);
+
+        }
+
+        public async Task<(bool IsSuccess, string ErrorMessage)> ChangeProfilePictureAsync(int userId, IFormFile profilePicture)
+        {
+            var path = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot",
+                "images",
+                "users",
+                $"{userId}{Path.GetExtension(profilePicture.FileName)}"
+                );
+            using var stream = new FileStream(path, FileMode.Create);
+            await profilePicture.CopyToAsync(stream);
+            return (true, string.Empty);
+        }
+
     }
 }

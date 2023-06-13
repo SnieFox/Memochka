@@ -48,11 +48,6 @@ namespace Memochka.Controllers
             return RedirectToAction("MainPage");
         }
 
-        public IActionResult SetProfileImage()
-        {
-            return RedirectToAction("ProfilePage");
-        }
-
         [HttpPost]
         public async Task<IActionResult> Login(User user)
         {
@@ -95,6 +90,34 @@ namespace Memochka.Controllers
                 return View(user);
             }
             return RedirectToAction("MainPage");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserData(User user)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    var errorMessage = ModelState.Values
+            //        .SelectMany(e => e.Errors)
+            //        .Select(e => e.ErrorMessage)
+            //        .ToList();
+            //    return BadRequest(errorMessage);
+            //}
+            var updateUser = await _userServices.UpdateUserAsync(user);
+            if (!updateUser.IsSuccess)
+                return BadRequest(updateUser.ErrorMessage);
+            return RedirectToAction("ProfilePage", user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetProfilePicture(User user)
+        {
+            if (!Request.Form.Files.Any())
+                return RedirectToAction("ProfilePage", user);
+            var changeProfilePicture = await _userServices.ChangeProfilePictureAsync(user.Id, Request.Form.Files[0]);
+            if(!changeProfilePicture.IsSuccess)
+                return BadRequest(changeProfilePicture.ErrorMessage);
+            return RedirectToAction("ProfilePage", user);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
