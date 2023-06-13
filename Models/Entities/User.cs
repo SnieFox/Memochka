@@ -9,12 +9,8 @@ namespace Memochka.Models.Entities
         public string? LastName { get; set; }
         public string Nickname { get; set; }
         public int RoleId { get; set; }
-        public string? ProfilePictureId { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-
-        [NotMapped]
-        public IFormFile? PictureFile { get; set; }
 
         public Role? Role { get; set; }
         public List<Meme>? Memes { get; set; }

@@ -1,25 +1,36 @@
 ﻿@model Memochka.Models.Entities.User
 @{
     ViewData["Title"] = "Profile";
+    var profileImage = Directory.GetFiles("wwwroot/images/users");
+    string fileExtention = string.Empty;
+    bool isPictureSet = false;
+    foreach (var img in profileImage)
+    {
+        if (img.Contains($"{Convert.ToString(Model.Id)}"))
+        {
+            isPictureSet = true;
+            fileExtention = img.Split(".")[1];
+        }
+    }
 }
 <div class="main-container my-5">
-    <div class="row">
-        <div class="d-flex flex-wrap col-md-4">
-            <div style="position: fixed" class=" d-block mb-auto justify-content-center">
+    <div class="row flex-wrap">
+        <div class="d-flex flex-wrap col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
+            <div class=" d-block mb-auto justify-content-center mx-auto">
                 <div class="d-block text-center">
                     <p class="mx-auto text-center" style="font-size: 25px; font-weight: 500">@Model.Nickname</p>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <img src="/images/LoginImage.jpg" style="width: 250px; height: 250px" class="rounded-circle mx-auto"/>
+                    <img src="@(isPictureSet?$"/images/users/{Model.Id}.{fileExtention}":"/images/LoginImage.jpg")" style="width: 250px; height: 250px" class="rounded-circle mx-auto" />
                 </div>
                 <div class="d-flex justify-content-center">
                     <a role="button" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px; max-height: 54px">Додати фоточку</a>
                 </div>
             </div>
         </div>
-        <div class="pt-3 d-block col-md-8 ms-auto border-start">
+        <div class="pt-3 d-block col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-3 ms-auto border-start">
             <div class="d-flex justify-content-end">
-                <a role="button" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-dark me-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Редагувати дані</a>
+                <a role="button" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-dark change-data-button" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Редагувати дані</a>
             </div>
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -63,7 +74,7 @@
             <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form asp-controller="Home" asp-action="SetProfilePicture" class="pt-1">
+                        <form asp-controller="Home" enctype="multipart/form-data" asp-action="SetProfilePicture" class="pt-1">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel1">Змінити картинку профілю</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -73,7 +84,7 @@
                                 <!-- File input -->
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="someId">Оберіть картинку</label>
-                                    <input id="someId" type="file" class="form-control" />
+                                    <input id="someId" name="img" type="file" class="form-control"/>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -115,7 +126,7 @@
                         <div class="card card-body">
                             @for (int i = 1; i < 5; i++)
                             {
-                                <div class="d-flex border mt-3" style="max-height: 80px">
+                                <div class="d-flex border mt-3 overflow-hidden" style="max-height: 80px">
                                     <img src="/images/Пример мем.jpg" style="width: 78px;height: 78px"/>
                                     <p class="ms-3" style="font-size: 20px; font-weight: 500">Some placeholder content for the collapse component.</p>
                                     <p class="mt-auto mb-0 me-1 text-secondary">17.04.23</p>
@@ -135,11 +146,12 @@
                             @for (int i = 1; i < 5; i++)
                             {
                                 <div class="d-flex border mt-3" style="max-height: 80px">
-                                    <img src="/images/Пример мем.jpg" style="width: 78px;height: 78px"/>
+                                    <img src="/images/Пример мем.jpg" style="width: 78px;height: 78px" />
                                     <p class="ms-3" style="font-size: 20px; font-weight: 500">Some placeholder content for the collapse component.</p>
                                     <p class="mt-auto mb-0 me-1 text-secondary">17.04.23</p>
                                 </div>
-                            }                        </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

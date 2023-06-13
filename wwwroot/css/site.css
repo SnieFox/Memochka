@@ -47,6 +47,23 @@ html {
     flex: 0 0 auto;
     width: 66.66666667%;
 }
+.profile-image {
+    
+}
+@media (max-width: 785px) {
+    .profile-image {
+        position: absolute;
+    }
+}
+.change-data-button {
+    margin: 0 auto 0 0;
+}
+
+@media (max-width: 785px) {
+    .change-data-button {
+        margin: 0 auto;
+    }
+}
 .memes-container {
     flex: 0 0 32%;
     width: 32%;

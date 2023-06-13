@@ -103,7 +103,7 @@ namespace Memochka.Services
                 "wwwroot",
                 "images",
                 "users",
-                $"{userId}{Path.GetExtension(profilePicture.FileName)}"
+                $"{userId}.jpg"
                 );
             using var stream = new FileStream(path, FileMode.Create);
             await profilePicture.CopyToAsync(stream);
