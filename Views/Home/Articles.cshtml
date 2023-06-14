@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Memochka.Models.MemochkaDbContext
+@inject MemochkaContext DbContext
+@{
     ViewData["Title"] = "News";
     // Top 10 News List
     var top10news = new List<News>()
@@ -20,6 +24,9 @@
         new News(15, "Topic 15", "Desc 15", "15"),
         new News(16, "Topic 16", "Desc 16", "16")
     };
+    int temp = 1;
+    var memes = DbContext.Memes
+        .OrderByDescending(m => m.Views).Take(5).ToList();
 }
 <div class="main-container my-5">
     <div class="row border p-3">
@@ -43,7 +50,7 @@
                     </div>
                     <div class="modal-body d-flex justify-content-center border p-1">
                         <div style="background: white; width: 50%">
-                            <a role="button" class="d-flex flex-wrap text-center mx-auto btn">
+                            <a role="button" asp-action="CreateMemePage" class="d-flex flex-wrap text-center mx-auto btn">
                                 <img src="/images/LoginImage.jpg" style="width: 150px;height: 150px" class="mx-auto" />
                                 <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: black; color: white" class="mt-5 text-center mx-auto">Додати мемчик</p>
                             </a>
@@ -75,17 +82,20 @@
             @*Popular Memes*@
             <div class="justify-content-center text-center mt-5">
                 <h4 class="fw-bold ">ПОПУЛЯРНІ МЕМЧИКИ!!!</h4>
-                @for (int i = 0; i < 5; i++)
+                @foreach (var meme in memes)
                 {
                     <div class="d-flex justify-content-center">
-                        <div class="card text-light m-3 mb-0 d-flex align-items-center" style="border-width: 0">
-                            <img src="/images/ПримерМем2.jpg" class="card-img d-block " style="width: 90%; max-height: 100%; max-width: 100%">
-                            <div class="card-img-overlay d-flex align-items-start">
-                                <span class="badge bg-primary me-auto ms-2" style="font-size: 19px; border-radius: 50%">@(i + 1)</span>
+                        <a class="d-flex text-decoration-none justify-content-center" asp-action="MemePage" asp-route-id="@meme.Id">
+                            <div class="card text-light m-3 mb-0 d-flex align-items-center" style="border-width: 0">
+                                <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" class="card-img d-block " style="width: 90%; max-height: 100%; max-width: 100%">
+                                <div class="card-img-overlay d-flex align-items-start">
+                                    <span class="badge bg-primary me-auto ms-2" style="font-size: 19px; border-radius: 50%">@(temp++)</span>
+                                </div>
+                                <p class="text-black me-auto ms-3 mt-1 mb-0" style="font-size: 17px; font-weight: 600">@meme.Title</p>
                             </div>
-                            <p class="text-black me-auto ms-3 mt-1 mb-0" style="font-size: 17px; font-weight: 600">@top10news[i].Title</p>
-                        </div>
+                        </a>
                     </div>
+
                 }
             </div>
         </div>

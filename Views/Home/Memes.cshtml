@@ -1,16 +1,11 @@
-﻿
+﻿@using Memochka.Models.MemochkaDbContext
+@model Memochka.Models.Entities.Meme
+@inject MemochkaContext DbContext
 @{
     ViewData["Title"] = "MemesHistory";
     // Top 10 News List
-    var sections = new List<string>()
-    {
-        "Персона",
-        "Тренд",
-        "Комікс",
-        "Фейс",
-        "Фрази",
-        "Пікча"
-    };
+    var sections = DbContext.MemeCategories
+        .Select(c => c.Category).ToList();
     var years = new List<int>()
     {
         2007,
@@ -22,25 +17,8 @@
         2013,
         2014
     };
-    var top10news = new List<News>()
-    {
-        new News(1, "Topic 1", "Desc 1", "1"),
-        new News(2, "Topic 2", "Desc 2", "12"),
-        new News(3, "Topic 3", "Desc 3", "8"),
-        new News(4, "Topic 4", "Desc 4", "6"),
-        new News(5, "Topic 5", "Desc 5", "11"),
-        new News(6, "Topic 6", "Desc 6", "13"),
-        new News(7, "Topic 7", "Desc 7", "19"),
-        new News(8, "Topic 8", "Desc 8", "15"),
-        new News(9, "Topic 9", "Desc 9", "3"),
-        new News(10, "Topic 10", "Desc 10", "10"),
-        new News(11, "Topic 11", "Desc 11", "11"),
-        new News(12, "Topic 12", "Desc 12", "13"),
-        new News(13, "Topic 13", "Desc 13", "19"),
-        new News(14, "Topic 14", "Desc 14", "114"),
-        new News(15, "Topic 15", "Desc 15", "15"),
-        new News(16, "Topic 16", "Desc 16", "16")
-    };
+    var memes = DbContext.Memes
+        .OrderByDescending(m => m.PublicationDate);
 }
 <div class="main-container my-5">
     <div class="row border p-3">
@@ -63,7 +41,7 @@
                     </div>
                     <div class="modal-body d-flex justify-content-center border p-1">
                         <div style="background: white; width: 50%">
-                            <a role="button" class="d-flex flex-wrap text-center mx-auto btn">
+                            <a role="button" asp-action="CreateMemePage" class="d-flex flex-wrap text-center mx-auto btn">
                                 <img src="/images/LoginImage.jpg" style="width: 150px;height: 150px" class="mx-auto" />
                                 <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: black; color: white" class="mt-5 text-center mx-auto">Додати мемчик</p>
                             </a>
@@ -102,11 +80,13 @@
         @*Right Side*@
         <div class="col-xl-8 col-lg-8 col-md-12 d-inline">
             <div class="d-flex flex-wrap">
-                @for (int i = 0; i < 15; i++)
+                @foreach(var meme in memes)
                 {
                     <div class="d-block mb-3 mt-2 memes-container">
-                        <img src="/images/ПримерМем2.jpg" style="width: 90%; height: 90%"/>
-                        <p class="mb-3 ms-md-2" style="font-size: 18px; font-weight: 500">@top10news[i].Title</p>
+                        <a role="button" class="text-decoration-none" asp-controller="Home" asp-action="MemePage" asp-route-id="@meme.Id">
+                            <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" style="width: 90%; height: 90%" />
+                            <p class="mb-3 ms-md-2 text-black" style="font-size: 18px; font-weight: 500">@meme.Title</p>
+                        </a>
                     </div>
                 }
             </div>

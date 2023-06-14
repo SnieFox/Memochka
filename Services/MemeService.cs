@@ -10,6 +10,17 @@ namespace Memochka.Services
     {
         private MemochkaContext _context;
         public MemeService(MemochkaContext context)=>_context=context;
+
+        public async Task<(bool IsSuccess, string ErrorMessage)> UpMemeViewsAsync(int memeId)
+        {
+            var meme = _context.Memes
+                .Where(m=>m.Id==memeId)
+                .FirstOrDefault();
+            meme.Views++;
+            _context.Memes.Update(meme);
+            int savedData = await _context.SaveChangesAsync();
+            return savedData==0?(false, "Something went wrong when change meme views in db"):(true,string.Empty);
+        }
         public async Task<(bool IsSuccess, string ErrorMessage)> CreateMemeAsync(string userLogin, Meme meme, IFormFileCollection files)
         {
             if (meme == null)

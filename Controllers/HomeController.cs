@@ -141,6 +141,21 @@ namespace Memochka.Controllers
             return RedirectToAction("ProfilePage");
         }
 
+        public async Task<IActionResult> MemePage(int id)
+        {
+            var memeViews = await _memeService.UpMemeViewsAsync(id);
+            if(!memeViews.IsSuccess)
+                return BadRequest(memeViews.ErrorMessage);
+            var meme = _context.Memes
+                .Where(m => m.Id == id)
+                .Include(u=>u.User)
+                .Include(u => u.MemePictures)
+                .FirstOrDefault();
+            if (meme == null)
+                return NotFound();
+            return View(meme);
+        }
+
         #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
