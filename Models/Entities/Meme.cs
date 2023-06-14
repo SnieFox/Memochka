@@ -1,4 +1,4 @@
-﻿namespace Memochka.Models.Entities
+﻿ namespace Memochka.Models.Entities
 {
     public record Meme
     {

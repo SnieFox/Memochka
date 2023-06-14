@@ -18,6 +18,31 @@
 
 <div class="main-container my-5">
     <div class="row">
+        @* Modal*@
+        <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Додати пост</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center border p-1">
+                        <div style="background: white; width: 50%">
+                            <a role="button" asp-action="CreateMemePage" class="d-flex flex-wrap text-center mx-auto btn">
+                                <img src="/images/LoginImage.jpg" style="width: 150px;height: 150px" class="mx-auto" />
+                                <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: black; color: white" class="mt-5 text-center mx-auto">Додати мемчик</p>
+                            </a>
+                        </div>
+                        <div style="background: black; color: white; width: 50%">
+                            <a role="button" class="d-flex flex-wrap text-center mx-auto btn">
+                                <img src="/images/WhitePensil.png" style="width: 150px;height: 150px" class="mx-auto"/>
+                                <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: white; color: black" class="mt-5 text-center mx-auto">Написати статтю</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @*Left Side*@
         <div class="col-xl-8 col-lg-8 col-md-8-custom col-sm-12 d-inline border-end">
             <div class="d-block text-center justify-content-center p-2 flex-fill">
@@ -58,7 +83,7 @@
                             </div>
                             <div class="d-block mt-3 mb-3">
                                 <p class="my-2 " style="font-size: 30px; font-weight: 700">Стань автором!</p>
-                                <a role="button" aria-disabled="true" class="btn btn-dark mt-3" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                                <a role="button" data-bs-toggle="modal" data-bs-target="#addPostModal" aria-disabled="true" class="btn btn-dark mt-3" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
                             </div>
                         </div>
                     </div>

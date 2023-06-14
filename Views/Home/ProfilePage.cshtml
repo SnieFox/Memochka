@@ -1,7 +1,12 @@
-﻿@model Memochka.Models.Entities.User
+﻿@using Memochka.Models.MemochkaDbContext
+@model Memochka.Models.Entities.User
+@inject MemochkaContext DbContext
 @{
     ViewData["Title"] = "Profile";
     var profileImage = Directory.GetFiles("wwwroot/images/users");
+    var userMemes = DbContext.Memes
+        .Where(u => u.UserId == Model.Id)
+        .ToList();
     string fileExtention = string.Empty;
     bool isPictureSet = false;
     foreach (var img in profileImage)
@@ -74,7 +79,7 @@
             <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form asp-controller="Home" enctype="multipart/form-data" asp-action="SetProfilePicture" class="pt-1">
+                        <form asp-controller="Home" asp-action="SetProfilePicture" class="pt-1">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel1">Змінити картинку профілю</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -124,12 +129,12 @@
                     </p>
                     <div class="collapse" id="collapseExample">
                         <div class="card card-body">
-                            @for (int i = 1; i < 5; i++)
+                            @foreach(var meme in userMemes)
                             {
                                 <div class="d-flex border mt-3 overflow-hidden" style="max-height: 80px">
-                                    <img src="/images/Пример мем.jpg" style="width: 78px;height: 78px"/>
-                                    <p class="ms-3" style="font-size: 20px; font-weight: 500">Some placeholder content for the collapse component.</p>
-                                    <p class="mt-auto mb-0 me-1 text-secondary">17.04.23</p>
+                                    <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" style="width: 78px;height: 78px" />
+                                    <p class="ms-3" style="font-size: 20px; font-weight: 500">@meme.Title</p>
+                                    <p class="mt-auto mb-0 me-1 ms-auto text-secondary">@meme.PublicationDate</p>
                                 </div>
                             }
                         </div>

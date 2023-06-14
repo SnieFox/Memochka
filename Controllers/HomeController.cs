@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.Security.Claims;
 using Memochka.Models.Entities;
 using Memochka.Models.MemochkaDbContext;
-using Memochka.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.AspNetCore.Identity;
+using Memochka.Services.Interfaces;
 
 namespace Memochka.Controllers
 {
@@ -18,8 +18,10 @@ namespace Memochka.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly MemochkaContext _context;
         private readonly IUser<User> _userServices;
-        public HomeController(ILogger<HomeController> logger, MemochkaContext context, IUser<User> userServices)
+        private readonly IMeme _memeService;
+        public HomeController(ILogger<HomeController> logger, MemochkaContext context, IUser<User> userServices, IMeme memeService)
         {
+            _memeService = memeService;
             _userServices = userServices;
             _logger = logger;
             _context = context;
@@ -31,6 +33,7 @@ namespace Memochka.Controllers
         public IActionResult MemesOffer() => View();
         public IActionResult Login() => View();
         public IActionResult Registration() => View();
+        public IActionResult CreateMemePage() => View();
 
         public IActionResult ProfilePage()
         {
@@ -42,6 +45,9 @@ namespace Memochka.Controllers
             
             return View(user);
         }
+
+        #region User
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -119,6 +125,23 @@ namespace Memochka.Controllers
                 return BadRequest(changeProfilePicture.ErrorMessage);
             return RedirectToAction("ProfilePage", user);
         }
+
+        #endregion
+
+        #region Meme
+
+        public async Task<IActionResult> CreateMeme(Meme meme)
+        {
+            var userLogin = HttpContext.User.Identity.Name;
+            if (!Request.Form.Files.Any())
+                return RedirectToAction("CreateMemePage", meme);
+            var memeService = await _memeService.CreateMemeAsync(userLogin, meme, Request.Form.Files);
+            if (!memeService.IsSuccess)
+                return BadRequest(memeService.ErrorMessage);
+            return RedirectToAction("ProfilePage");
+        }
+
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

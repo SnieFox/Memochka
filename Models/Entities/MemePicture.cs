@@ -2,9 +2,9 @@
 {
     public record MemePicture
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public int MemeId { get; set; }
-        public int PictureId { get; set; }
+        public string PictureId { get; set; }
 
         public Meme Meme { get; set; }
     }

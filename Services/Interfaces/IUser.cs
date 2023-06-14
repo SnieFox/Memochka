@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Memochka.Services
+namespace Memochka.Services.Interfaces
 {
     public interface IUser<TUser> where TUser : class
     {

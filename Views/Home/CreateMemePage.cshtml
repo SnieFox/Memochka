@@ -1,0 +1,62 @@
+﻿@using Memochka.Models.MemochkaDbContext
+@model Memochka.Models.Entities.Meme
+@inject MemochkaContext DbContext;
+@{
+    ViewData["Title"] = "Create Meme";
+    var categories = DbContext.MemeCategories.ToList();
+}
+<div class="main-container my-5">
+    <div class="row">
+        <form asp-controller="Home" asp-action="CreateMeme" enctype="multipart/form-data" class="pt-5 ms-auto">
+            <!-- Title input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="titleInput">Назва</label>
+                <input asp-for="Title" id="titleInput" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger h3" style="font-size: 15px"></span>
+            </div>
+            <!-- Main Picture input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="mainPictureId">Оберіть головну картинку</label>
+                <input id="mainPictureId" name="mainImg" type="file" class="form-control" />
+            </div>
+            <!-- Origins input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="originsIput">Походження</label>
+                <input asp-for="Origins" id="originsIput" class="form-control" />
+                <span asp-validation-for="Origins" class="text-danger h3" style="font-size: 15px"></span>
+            </div>
+            <!-- Origins Picture input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="originsPictureId">Оберіть картинку походження</label>
+                <input id="originsPictureId" name="originImg" type="file" class="form-control" />
+            </div>
+            <!-- Meaning input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="meaningInput">Значення</label>
+                <input asp-for="Meaning" id="meaningInput" class="form-control" />
+                <span asp-validation-for="Meaning" class="text-danger h3" style="font-size: 15px"></span>
+            </div>
+            <!-- Year input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="yearInput">Рік створення мему</label>
+                <input asp-for="Year" id="yearInput" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger h3" style="font-size: 15px"></span>
+            </div>
+            @*Category Input*@
+            <select class="form-select" asp-for="CategoryId" aria-label="Default select example">
+                <option selected>Category</option>
+                @foreach (var category in categories)
+                {
+                    <option value="@category.Id">@category.Category</option>
+                }
+            </select>
+            <!-- Multiple memes input -->
+            <div class="mb-4">
+                <label for="multipleMemesInput" class="form-label">Додайте приклади мемасів!</label>
+                <input class="form-control" name="memeImg" type="file" id="multipleMemesInput" multiple>
+            </div>
+            <!-- Submit button -->
+            <button type="submit" asp-action="CreateMeme" class="btn btn-primary btn-block mb-4 w-100">Створити МЕМ</button>
+        </form>
+    </div>
+</div>

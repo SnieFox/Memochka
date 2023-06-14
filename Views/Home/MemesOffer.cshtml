@@ -28,6 +28,31 @@
         </div>
     </div>
     <div class="row">
+        @* Modal*@
+        <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Додати пост</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex justify-content-center border p-1">
+                        <div style="background: white; width: 50%">
+                            <a role="button" class="d-flex flex-wrap text-center mx-auto btn">
+                                <img src="/images/LoginImage.jpg" style="width: 150px;height: 150px" class="mx-auto" />
+                                <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: black; color: white" class="mt-5 text-center mx-auto">Додати мемчик</p>
+                            </a>
+                        </div>
+                        <div style="background: black; color: white; width: 50%">
+                            <a role="button" class="d-flex flex-wrap text-center mx-auto btn">
+                                <img src="/images/WhitePensil.png" style="width: 150px;height: 150px" class="mx-auto" />
+                                <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: white; color: black" class="mt-5 text-center mx-auto">Написати статтю</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @*Left Side*@
         <div class="col-xl-8 col-lg-8 col-md-12 d-inline border-end">
             <div class="d-block">
@@ -37,7 +62,7 @@
                         <p class="mb-2 ms-md-2" style="font-size: 30px; font-weight: 600">@top10news[i].Title</p>
                         <img src="/images/ПримерМем2.jpg" style="width: 90%; height: 90%"/>
                         <div class="d-flex mt-3">
-                            <img src="/images/Ава дефолт.png" class="me-3 my-auto rounded-circle" style="height: 45px;width: 45px"/>
+                            <img src="/images/Ава дефолт.png" class="me-3 my-auto rounded-circle" style="height: 45px; width: 45px"/>
                             <p class="my-auto" style="font-weight: 600; font-size: 20px">Автор Автор</p>
                             <p class="my-auto ms-2" style="font-size: 13px">12.04.2002 об 13:00</p>
                         </div>
@@ -49,11 +74,11 @@
         <div class="col-xl-4 col-lg-4 col-md-12 d-inline">
             <div class=" d-block p-2 border mt-3">
                 <div class="rounded-circle bg-black mx-auto" style="max-width: 100px; max-height: 100px">
-                    <img src="/images/WhitePensil.png" class="p-3" />
+                    <img src="/images/WhitePensil.png" class="p-3"/>
                 </div>
                 <div class="d-flex mt-3 mb-3 align-content-center flex-wrap">
                     <p class="my-2 mx-auto" style="font-size: 30px; font-weight: 700">Стань автором!</p>
-                    <a role="button" aria-disabled="true" class="btn btn-dark mt-3 mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                    <a role="button" data-bs-toggle="modal" data-bs-target="#addPostModal" aria-disabled="true" class="btn btn-dark mt-3 mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
                 </div>
             </div>
             @*Popular Memes*@
