@@ -62,14 +62,14 @@
                 <div class="mt-3">
                     <h1>Походження</h1>
                     <p>@Model.Origins</p>
-                    <img class="mt-1" src="@($"/images/memes/{Model.Id}OriginImg.jpg")" />
+                    <img class="mt-1 w-100" src="@($"/images/memes/{Model.Id}OriginImg.jpg")" />
                 </div>
                 <div class="mt-3">
                     <h1>Значення</h1>
                     <p>@Model.Meaning</p>
                 </div>
                 @*Slider*@
-                <div id="carouselExampleCaptions" class="carousel slide mx-auto mt-3">
+                <div id="carouselExampleCaptions" class="carousel slide mx-auto mt-5">
                     <div class="carousel-inner">
                         @foreach (var item in Model.MemePictures)
                         {

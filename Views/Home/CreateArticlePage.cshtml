@@ -1,0 +1,72 @@
+﻿@using Memochka.Models.MemochkaDbContext
+@using Microsoft.IdentityModel.Tokens
+@using Memochka.Models.Entities
+@model Memochka.Models.Entities.Article
+@inject MemochkaContext DbContext;
+@{
+    ViewData["Title"] = "Create Article";
+}
+<div class="main-container my-5">
+    <div class="row">
+        <form asp-controller="Home" asp-action="AddArticleParagraph" method="post" enctype="multipart/form-data">
+            <!-- Title input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="titleInput">Назва</label>
+                <input asp-for="Title" id="titleInput" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger h3" style="font-size: 15px"></span>
+            </div>
+            <!-- Main Picture input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="mainPictureId">Оберіть головну картинку</label>
+                <input id="mainPictureId" name="mainImg" type="file" class="form-control" />
+            </div>
+
+            <h3>Параграфи</h3>
+            <div id="paragraphsContainer">
+                <div class="form-group paragraph">
+                    <label for="paragraphTitle">Заголовок</label>
+                    <input class="form-control" id="paragraphTitle" type="text" name="Article.ArticleParagraphs[0].Title" />
+                    <span asp-validation-for="@Model.ArticleParagraphs[0].Title" class="text-danger"></span>
+                    <!-- ArticleParagraphs Description input -->
+                    <label for="paragraphDescription">Опис</label>
+                    <textarea class="form-control" id="paragraphDescription" name="Article.ArticleParagraphs[0].Description"></textarea>
+                    <span asp-validation-for="@Model.ArticleParagraphs[0].Description" class="text-danger"></span>
+                    
+                    <!-- ArticleParagraphs Picture input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="paragraphsPictureId">Оберіть картинку</label>
+                        <input id="paragraphsPictureId" name="0" type="file" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="addParagraph()">Add Paragraph</button>
+
+            <button type="submit" asp-action="AddArticleParagraph" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function addParagraph() {
+            var container = document.getElementById("paragraphsContainer");
+            var index = document.getElementsByClassName('paragraph').length;
+            var newParagraph = document.createElement("div");
+            newParagraph.classList.add("form-group", "paragraph");
+
+            newParagraph.innerHTML = `
+                                <label for="paragraphTitle">Заголовок</label>
+                                        <input class="form-control" id="paragraphTitle" type="text" name="Article.ArticleParagraphs[${index}].Title" />
+
+                                <label for="paragraphDescription">Опис</label>
+                                        <textarea class="form-control" id="paragraphDescription" name="Article.ArticleParagraphs[${index}].Description"></textarea>
+
+                                <label for="paragraphsPictureId">Оберіть картинку</label>
+                                        <input class="form-control"  type="file" id="paragraphsPictureId" name="${index}" />
+                    `;
+
+            container.appendChild(newParagraph);
+        }
+    </script>
+}

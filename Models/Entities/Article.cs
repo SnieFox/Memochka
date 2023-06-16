@@ -7,7 +7,6 @@
         public int Views { get; set; }
         public DateTime PublicationDate { get; set; }
         public int UserId { get; set; }
-        public int MainPictureId { get; set; }
 
         public User User { get; set; }
         public List<ArticleParagraph> ArticleParagraphs { get; set; }

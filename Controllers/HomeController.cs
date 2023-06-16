@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using Memochka.Models.Entities;
 using Memochka.Models.MemochkaDbContext;
+using Memochka.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +20,10 @@ namespace Memochka.Controllers
         private readonly MemochkaContext _context;
         private readonly IUser<User> _userServices;
         private readonly IMeme _memeService;
-        public HomeController(ILogger<HomeController> logger, MemochkaContext context, IUser<User> userServices, IMeme memeService)
+        private readonly IArticle _articleService;
+        public HomeController(ILogger<HomeController> logger, MemochkaContext context, IUser<User> userServices, IMeme memeService, IArticle articleService)
         {
+            _articleService = articleService;
             _memeService = memeService;
             _userServices = userServices;
             _logger = logger;
@@ -34,6 +37,7 @@ namespace Memochka.Controllers
         public IActionResult Login() => View();
         public IActionResult Registration() => View();
         public IActionResult CreateMemePage() => View();
+        public IActionResult CreateArticlePage() => View();
 
         public IActionResult ProfilePage()
         {
@@ -154,6 +158,33 @@ namespace Memochka.Controllers
             if (meme == null)
                 return NotFound();
             return View(meme);
+        }
+
+        #endregion
+
+        #region Article
+
+        public async Task<IActionResult> CreateArticle(Article article)
+        {
+            //bool isArticleParagraph = false;
+            //var creteArticle = await _articleService.CreateArticleAsync(article);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddArticleParagraph([FromForm]Article article)
+        {
+            bool isArticleParagraph = true;
+            var userLogin = HttpContext.User.Identity.Name;
+            if (!Request.Form.Files.Any())
+                return RedirectToAction("CreateArticlePage", article);
+            var creteArticleParagraph = await _articleService.CreateArticleAsync(article, userLogin, Request.Form.Files[0]);
+            if (!creteArticleParagraph.IsSuccess)
+                return BadRequest(creteArticleParagraph.ErrorMessage);
+            var returnArticle = await _context.Articles
+                .Include(a => a.ArticleParagraphs)
+                .Where(a => a.Title == article.Title).FirstOrDefaultAsync();
+            return RedirectToAction("CreateArticlePage",returnArticle);
         }
 
         #endregion

@@ -20,6 +20,7 @@ builder.Services.AddAuthentication(options =>
     .AddCookie();
 builder.Services.AddTransient<IUser<User>, UserService>();
 builder.Services.AddTransient<IMeme, MemeService>();
+builder.Services.AddTransient<IArticle, ArticleService>();
 //builder.Services.AddIdentity<User, IdentityRole>();
 
 var app = builder.Build();

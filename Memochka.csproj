@@ -47,6 +47,7 @@
     <Folder Include="wwwroot\css\Fontello\" />
     <Folder Include="wwwroot\images\users\" />
     <Folder Include="wwwroot\images\memes\" />
+    <Folder Include="wwwroot\images\articles\" />
   </ItemGroup>
 
 </Project>
