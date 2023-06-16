@@ -164,27 +164,31 @@ namespace Memochka.Controllers
 
         #region Article
 
+        [HttpPost]
         public async Task<IActionResult> CreateArticle(Article article)
         {
-            //bool isArticleParagraph = false;
-            //var creteArticle = await _articleService.CreateArticleAsync(article);
-            return Ok();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddArticleParagraph([FromForm]Article article)
-        {
-            bool isArticleParagraph = true;
             var userLogin = HttpContext.User.Identity.Name;
             if (!Request.Form.Files.Any())
                 return RedirectToAction("CreateArticlePage", article);
-            var creteArticleParagraph = await _articleService.CreateArticleAsync(article, userLogin, Request.Form.Files[0]);
+            var creteArticleParagraph = await _articleService.CreateArticleAsync(article, userLogin, Request.Form.Files);
             if (!creteArticleParagraph.IsSuccess)
                 return BadRequest(creteArticleParagraph.ErrorMessage);
-            var returnArticle = await _context.Articles
-                .Include(a => a.ArticleParagraphs)
-                .Where(a => a.Title == article.Title).FirstOrDefaultAsync();
-            return RedirectToAction("CreateArticlePage",returnArticle);
+            return RedirectToAction("ProfilePage");
+        }
+
+        public async Task<IActionResult> ArticlePage(int id)
+        {
+            var articleViews = await _articleService.UpArticleViewsAsync(id);
+            if (!articleViews.IsSuccess)
+                return BadRequest(articleViews.ErrorMessage);
+            var article = _context.Articles
+                .Where(a => a.Id == id)
+                .Include(u => u.User)
+                .Include(u => u.ArticleParagraphs)
+                .FirstOrDefault();
+            if (article == null)
+                return NotFound();
+            return View(article);
         }
 
         #endregion

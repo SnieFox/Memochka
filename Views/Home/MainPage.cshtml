@@ -20,8 +20,15 @@
         new News(10, "Topic 10", "Desc 10", "10")
     };
     int temp = 1;
+    var articlesByPublicationDate10 = DbContext.Articles
+        .OrderByDescending(a => a.PublicationDate).Take(10).ToList();
+    var articlesByPublicationDate5 = DbContext.Articles
+        .OrderByDescending(a => a.PublicationDate).Take(5).ToList();
+    var articlesByViews = DbContext.Articles
+        .OrderByDescending(a => a.Views).Take(5).ToList();
     var memes = DbContext.Memes
         .OrderByDescending(m => m.Views).Take(5).ToList();
+    var picTemp = articlesByViews[0].Title;
 }
 
 <div class="main-container my-5">
@@ -57,17 +64,17 @@
                 @*Slider*@
                 <div id="carouselExampleCaptions" class="carousel slide mx-auto">
                     <div class="carousel-inner">
-                        @foreach (var item in top10news)
+                        @foreach (var article in articlesByViews)
                         {
-                            <div class="carousel-item @(item.Title == "Topic 1" ? "active" : "")">
-                                <img src="@Url.Content("~/images/Пример мем.jpg")" class="d-block w-100 img-fluid" alt="...">
+                            <div class="carousel-item @(article.Title == picTemp ? "active" : "")">
+                                <img src="@Url.Content($"~/images/articles/{article.Id}MainImg.jpg")" class="d-block w-100 img-fluid" alt="...">
                                 <div style="right: 0; left: 5%" class="custom-carousel-caption mt-5 d-md-block ">
                                     <div style="text-align: center; background: rgba(0, 0, 0, 0.4); max-width: 80px; max-height: 20px" class="mb-1 border-dark rounded-pill d-flex align-items-center">
                                         <i class="ms-2 bi bi-eye" style="max-width: 20px; max-height: 18px; margin-bottom: 4px"></i>
-                                        <p class="fst-italic fs-6" style="margin-left: 5px; margin-bottom: 0">@(item.Views)k</p>
+                                        <p class="fst-italic fs-6" style="margin-left: 5px; margin-bottom: 0">@(article.Views)</p>
                                     </div>
-                                    <h5>@item.Title</h5>
-                                    <p class="text-light text-opacity-100">@item.Description</p>
+                                    <h5>@article.Title</h5>
+                                    <p class="text-light text-opacity-100">@article.PublicationDate.ToString("g")</p>
                                 </div>
                             </div>
                         }
@@ -100,19 +107,19 @@
                         @for (int i = 0; i < 2; i++)
                         {
                             <div class="d-flex @(i == 0 ? "mb-3" : "")" style="width: 100%">
-                                <img src="images/Пример мем.jpg" class="custom-news-size"/>
-                                <p style="font-size: 17px; font-weight: 500" class="ms-3">@top10news[top10news.Count - i - 1].Title</p>
+                                <img src="@($"/images/articles/{articlesByViews[i].Id}MainImg.jpg")" class="custom-news-size" />
+                                <p style="font-size: 17px; font-weight: 500" class="ms-3">@articlesByViews[articlesByViews.Count - i - 1].Title</p>
                             </div>
                         }
                     </div>
                 </div>
                 @*Top 5 posts*@
                 <div class="d-block mx-auto">
-                    @for (int i = 0; i < 5; i++)
+                    @foreach (var article in articlesByPublicationDate5)
                     {
                         <div class="d-flex mb-3">
-                            <img src="images/Пример мем.jpg" style="width: 50%; height: 50%"/>
-                            <p class="ms-3" style="font-size: 18px; font-weight: 500">@top10news[i].Title</p>
+                            <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 50%; height: 50%" />
+                            <p class="ms-3" style="font-size: 18px; font-weight: 500">@article.Title</p>
                         </div>
                     }
                 </div>
@@ -125,12 +132,15 @@
                 <h4 class="fw-bold">НОВИНОЧКИ</h4>
                 <div class="srroll-area" style="height: 500px">
                     <ul class="list-group">
-                        @foreach (var topic in top10news)
+                        @foreach (var article in articlesByPublicationDate10)
                         {
                             <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
                                 <div class="me-auto">
-                                    <div class="mb-1 fs-6 fw-bolder text-start">@topic.Title</div>
-                                    <div class="fw-lighter text-start" style="font-size: 11px;">@topic.Description</div>
+                                    <a class="d-flex text-decoration-none w-100 border p-1" role="button" asp-action="ArticlePage" asp-route-id="@article.Id">
+                                        <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 50px;height: 50px" />
+                                        <p class="ms-3 text-black" style="font-size: 15px; font-weight: 500">@article.Title</p>
+                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto" style="font-size: 13px">@article.PublicationDate.ToString("g")</p>
+                                    </a>
                                 </div>
                             </li>
                         }

@@ -1,10 +1,15 @@
 ﻿@using Memochka.Models.MemochkaDbContext
+@using Microsoft.EntityFrameworkCore
 @model Memochka.Models.Entities.User
 @inject MemochkaContext DbContext
 @{
     ViewData["Title"] = "Profile";
     var profileImage = Directory.GetFiles("wwwroot/images/users");
     var userMemes = DbContext.Memes
+        .Where(u => u.UserId == Model.Id)
+        .ToList();
+    var userArticles = DbContext.Articles
+        .Include(a=>a.ArticleParagraphs)
         .Where(u => u.UserId == Model.Id)
         .ToList();
     string fileExtention = string.Empty;
@@ -150,12 +155,14 @@
                     </p>
                     <div class="collapse" id="collapseExample1">
                         <div class="card card-body">
-                            @for (int i = 1; i < 5; i++)
+                            @foreach (var article in userArticles)
                             {
-                                <div class="d-flex border mt-3" style="max-height: 80px">
-                                    <img src="/images/Пример мем.jpg" style="width: 78px;height: 78px" />
-                                    <p class="ms-3" style="font-size: 20px; font-weight: 500">Some placeholder content for the collapse component.</p>
-                                    <p class="mt-auto mb-0 me-1 text-secondary">17.04.23</p>
+                                <div class="d-flex border mt-3 overflow-hidden" style="max-height: 80px">
+                                    <a class="d-flex text-decoration-none w-100" role="button" asp-action="ArticlePage" asp-route-id="@article.Id">
+                                        <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 78px;height: 78px" />
+                                        <p class="ms-3 text-black" style="font-size: 20px; font-weight: 500">@article.Title</p>
+                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto">@article.PublicationDate.ToString("g")</p>
+                                    </a>
                                 </div>
                             }
                         </div>
