@@ -11,6 +11,44 @@ namespace Memochka.Services
         private MemochkaContext _context;
         public MemeService(MemochkaContext context)=>_context=context;
 
+        public async Task<(bool IsSuccess, string ErrorMessage, List<Meme> MemesList)> GetOrderedemesAsync(string category, int year)
+        {
+            List<Meme> memes = new List<Meme>();
+            if (category == null && year == 0)
+            {
+                memes = await _context.Memes
+                    .OrderByDescending(m => m.PublicationDate)
+                    .ToListAsync();
+            }
+
+            if (category != null)
+            {
+                memes = await _context.Memes
+                    .Include(m=>m.MemeCategory)
+                    .Where(m => m.MemeCategory.Category==category)
+                    .OrderByDescending(m => m.PublicationDate)
+                    .ToListAsync();
+            }
+
+            if (year != 0)
+            {
+                memes = await _context.Memes
+                    .Where(m => m.Year == year)
+                    .OrderByDescending(m => m.PublicationDate)
+                    .ToListAsync();
+            }
+
+            if (category != null && year != 0)
+            {
+                memes = await _context.Memes
+                    .Include(m => m.MemeCategory.Category)
+                    .Where(m => m.MemeCategory.Category == category&&m.Year == year)
+                    .OrderByDescending(m => m.PublicationDate)
+                    .ToListAsync();
+            }
+
+            return (true, string.Empty, memes);
+        }
         public async Task<(bool IsSuccess, string ErrorMessage)> UpMemeViewsAsync(int memeId)
         {
             var meme = _context.Memes

@@ -32,21 +32,38 @@ namespace Memochka.Controllers
 
         public IActionResult MainPage() => View();
         public IActionResult Articles() => View();
-        public IActionResult Memes() => View();
+
+        public async Task<IActionResult> Memes(string category, int year)
+        {
+            var memes = await _memeService.GetOrderedemesAsync(category, year);
+            if (!memes.IsSuccess)
+                return BadRequest(memes.ErrorMessage);
+            return View(memes.MemesList);
+        }
         public IActionResult MemesOffer() => View();
         public IActionResult Login() => View();
         public IActionResult Registration() => View();
         public IActionResult CreateMemePage() => View();
         public IActionResult CreateArticlePage() => View();
 
-        public IActionResult ProfilePage()
+        public async Task<IActionResult> ProfilePage()
         {
             var userIdentity = HttpContext.User.Identity.Name;
-            var user = _context.Users
+            var user = await _context.Users
                 .Include(r=>r.Role)
                 .Where(u => u.Login == userIdentity)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
             
+            return View(user);
+        }
+        public async Task<IActionResult> AdminPanel()
+        {
+            var userIdentity = HttpContext.User.Identity.Name;
+            var user = await _context.Users
+                .Include(r => r.Role)
+                .Where(u => u.Login == userIdentity)
+                .FirstOrDefaultAsync();
+
             return View(user);
         }
 
