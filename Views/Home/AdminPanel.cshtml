@@ -57,7 +57,7 @@
                                     </a>
                                     <div class="d-block ms-auto h-100">
                                         <a asp-route-Id="@meme.Id" asp-action="PublishMeme" class="me-1 text-success ms-auto text-decoration-none" style="font-weight: 500">Опублікувати</a>
-                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end">@meme.PublicationDate.ToString("g")</p>
+                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end" style="white-space: nowrap">@meme.PublicationDate.ToString("g")</p>
                                     </div>
                                 </div>
                             }
@@ -81,7 +81,7 @@
                                     </a>
                                     <div class="d-block ms-auto h-100">
                                         <a asp-route-Id="@article.Id" asp-action="PublishArticle" class="me-1 text-success ms-auto text-decoration-none" style="font-weight: 500">Опублікувати</a>
-                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end">@article.PublicationDate.ToString("g")</p>
+                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end" style="white-space: nowrap">@article.PublicationDate.ToString("g")</p>
                                     </div>
                                 </div>
                             }

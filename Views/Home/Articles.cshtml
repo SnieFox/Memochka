@@ -27,8 +27,10 @@
     };
     int temp = 1;
     var articles = DbContext.Articles
+        .Where(a=>a.IsApproved == true)
         .OrderByDescending(a => a.PublicationDate);
     var memes = DbContext.Memes
+        .Where(m=>m.IsApproved == true)
         .OrderByDescending(m => m.Views).Take(5).ToList();
 }
 <div class="main-container my-5">
@@ -80,7 +82,7 @@
             <div class="d-flex flex-wrap">
                 @foreach (var article in articles)
                 {
-                    <div class="d-block mb-3 mt-2 memes-container">
+                    <div class="d-block mb-3 mt-2 memes-container h-100">
                         <a role="button" class="text-decoration-none" asp-controller="Home" asp-action="MemePage" asp-route-id="@article.Id">
                             <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 90%; height: 90%" />
                             <p class="mb-3 ms-md-2 text-black" style="font-size: 18px; font-weight: 500">@article.Title</p>

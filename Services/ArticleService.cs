@@ -103,5 +103,15 @@ namespace Memochka.Services
             int savedData = await _context.SaveChangesAsync();
             return savedData == 0 ? (false, "Something went wrong when change article views in db") : (true, string.Empty);
         }
+        public async Task<(bool IsSuccess, string ErrorMessage)> PublishArticle(int id)
+        {
+            var article = await _context.Articles.FirstOrDefaultAsync(m => m.Id == id);
+            if (article == null)
+                return (false, "Article does not exist");
+            article.IsApproved = true;
+            _context.Articles.Update(article);
+            int saved = await _context.SaveChangesAsync();
+            return saved == 0 ? (false, "Something went wrong when changing data in db") : (true, string.Empty);
+        }
     }
 }

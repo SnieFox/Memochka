@@ -8,6 +8,7 @@
 @{
     int temp = 1;
     var memes = DbContext.Memes
+        .Where(m=>m.IsApproved==true)
         .OrderByDescending(m => m.Views).Take(5).ToList();
     string picTemp = Model.MemePictures[0].PictureId;
 }

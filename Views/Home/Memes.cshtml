@@ -26,8 +26,6 @@
         2022,
         2023
     };
-    var memes = DbContext.Memes
-        .OrderByDescending(m => m.PublicationDate);
 }
 <div class="main-container my-5">
     <div class="row border p-3">
@@ -98,8 +96,8 @@
             <div class="d-flex flex-wrap">
                 @foreach(var meme in Model)
                 {
-                    <div class="d-block mb-3 mt-2 memes-container">
-                        <a role="button" class="text-decoration-none" asp-controller="Home" asp-action="MemePage" asp-route-id="@meme.Id">
+                    <div class="d-block mb-3 mt-2 memes-container h-100">
+                        <a role="button" class="text-decoration-none w-100 h-100" asp-controller="Home" asp-action="MemePage" asp-route-id="@meme.Id">
                             <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" style="width: 90%; height: 90%" />
                             <p class="mb-3 ms-md-2 text-black" style="font-size: 18px; font-weight: 500">@meme.Title</p>
                         </a>

@@ -17,6 +17,7 @@ namespace Memochka.Services
             if (category == null && year == 0)
             {
                 memes = await _context.Memes
+                    .Where(m=>m.IsApproved == true)
                     .OrderByDescending(m => m.PublicationDate)
                     .ToListAsync();
             }
@@ -25,7 +26,7 @@ namespace Memochka.Services
             {
                 memes = await _context.Memes
                     .Include(m=>m.MemeCategory)
-                    .Where(m => m.MemeCategory.Category==category)
+                    .Where(m => m.MemeCategory.Category==category && m.IsApproved == true)
                     .OrderByDescending(m => m.PublicationDate)
                     .ToListAsync();
             }
@@ -33,7 +34,7 @@ namespace Memochka.Services
             if (year != 0)
             {
                 memes = await _context.Memes
-                    .Where(m => m.Year == year)
+                    .Where(m => m.Year == year && m.IsApproved == true)
                     .OrderByDescending(m => m.PublicationDate)
                     .ToListAsync();
             }
@@ -42,7 +43,7 @@ namespace Memochka.Services
             {
                 memes = await _context.Memes
                     .Include(m => m.MemeCategory.Category)
-                    .Where(m => m.MemeCategory.Category == category&&m.Year == year)
+                    .Where(m => m.MemeCategory.Category == category&&m.Year == year && m.IsApproved == true)
                     .OrderByDescending(m => m.PublicationDate)
                     .ToListAsync();
             }
@@ -148,9 +149,9 @@ namespace Memochka.Services
 
         public async Task<(bool IsSuccess, string ErrorMessage)> PublishMeme(int id)
         {
-            if (!await _context.Memes.AnyAsync(m => m.Id == id))
-                return (false, "Meme does not exist");
             var meme = await _context.Memes.FirstOrDefaultAsync(m => m.Id == id);
+            if (meme==null)
+                return (false, "Meme does not exist");
             meme.IsApproved = true;
             _context.Memes.Update(meme);
             int saved = await _context.SaveChangesAsync();

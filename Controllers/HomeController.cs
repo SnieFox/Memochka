@@ -130,14 +130,6 @@ namespace Memochka.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateUserData(User user)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    var errorMessage = ModelState.Values
-            //        .SelectMany(e => e.Errors)
-            //        .Select(e => e.ErrorMessage)
-            //        .ToList();
-            //    return BadRequest(errorMessage);
-            //}
             var updateUser = await _userServices.UpdateUserAsync(user);
             if (!updateUser.IsSuccess)
                 return BadRequest(updateUser.ErrorMessage);
@@ -176,20 +168,35 @@ namespace Memochka.Controllers
             var memeViews = await _memeService.UpMemeViewsAsync(id);
             if(!memeViews.IsSuccess)
                 return BadRequest(memeViews.ErrorMessage);
-            var meme = _context.Memes
-                .Where(m => m.Id == id)
-                .Include(u=>u.User)
-                .Include(u => u.MemePictures)
-                .FirstOrDefault();
+            Meme meme = new Meme();
+            if (User.IsInRole("Admin"))
+            {
+                meme = _context.Memes
+                    .Where(m => m.Id == id)
+                    .Include(u => u.User)
+                    .Include(u => u.MemePictures)
+                    .FirstOrDefault();
+            }
+            else if (User.IsInRole("User"))
+            {
+                meme = _context.Memes
+                    .Where(m => m.Id == id && m.IsApproved==true)
+                    .Include(u => u.User)
+                    .Include(u => u.MemePictures)
+                    .FirstOrDefault();
+            }
             if (meme == null)
-                return NotFound();
+                return NotFound("The meme does not exist or has not been approved by the moderator");
             return View(meme);
         }
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PublishMeme(int id)
         {
-
+            var publishedMeme = await _memeService.PublishMeme(id);
+            if (!publishedMeme.IsSuccess)
+                return BadRequest(publishedMeme.ErrorMessage);
+            return RedirectToAction("AdminPanel");
         }
 
         #endregion
@@ -214,16 +221,36 @@ namespace Memochka.Controllers
             var articleViews = await _articleService.UpArticleViewsAsync(id);
             if (!articleViews.IsSuccess)
                 return BadRequest(articleViews.ErrorMessage);
-            var article = _context.Articles
-                .Where(a => a.Id == id)
-                .Include(u => u.User)
-                .Include(u => u.ArticleParagraphs)
-                .FirstOrDefault();
+            Article article = new Article();
+            if (User.IsInRole("Admin"))
+            {
+                article = _context.Articles
+                    .Where(a => a.Id == id)
+                    .Include(u => u.User)
+                    .Include(u => u.ArticleParagraphs)
+                    .FirstOrDefault();
+            }
+            else if(User.IsInRole("User"))
+            {
+                article = _context.Articles
+                    .Where(a => a.Id == id && a.IsApproved==true)
+                    .Include(u => u.User)
+                    .Include(u => u.ArticleParagraphs)
+                    .FirstOrDefault();
+            }
             if (article == null)
-                return NotFound();
+                return NotFound("The article does not exist or has not been approved by the moderator");
             return View(article);
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> PublishArticle(int id)
+        {
+            var publishedArticle = await _articleService.PublishArticle(id);
+            if (!publishedArticle.IsSuccess)
+                return BadRequest(publishedArticle.ErrorMessage);
+            return RedirectToAction("AdminPanel");
+        }
         #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
