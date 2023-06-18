@@ -145,5 +145,16 @@ namespace Memochka.Services
                 return (false, picturesResult.Item2);
             return (true, string.Empty);
         }
+
+        public async Task<(bool IsSuccess, string ErrorMessage)> PublishMeme(int id)
+        {
+            if (!await _context.Memes.AnyAsync(m => m.Id == id))
+                return (false, "Meme does not exist");
+            var meme = await _context.Memes.FirstOrDefaultAsync(m => m.Id == id);
+            meme.IsApproved = true;
+            _context.Memes.Update(meme);
+            int saved = await _context.SaveChangesAsync();
+            return saved==0?(false,"Something went wrong when changing data in db"):(true, string.Empty);
+        }
     }
 }

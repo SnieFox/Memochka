@@ -5,20 +5,7 @@
 @inject MemochkaContext DbContext
 @{
     ViewData["Title"] = "Home Page";
-    // Top 10 News List
-    var top10news = new List<News>()
-    {
-        new News(1, "Topic 1", "Desc 1", "1"),
-        new News(2, "Topic 2", "Desc 2", "12"),
-        new News(3, "Topic 3", "Desc 3", "8"),
-        new News(4, "Topic 4", "Desc 4", "6"),
-        new News(5, "Topic 5", "Desc 5", "11"),
-        new News(6, "Topic 6", "Desc 6", "13"),
-        new News(7, "Topic 7", "Desc 7", "19"),
-        new News(8, "Topic 8", "Desc 8", "15"),
-        new News(9, "Topic 9", "Desc 9", "3"),
-        new News(10, "Topic 10", "Desc 10", "10")
-    };
+    int articleTempIndex = 0;
     int temp = 1;
     var articlesByPublicationDate10 = DbContext.Articles
         .OrderByDescending(a => a.PublicationDate).Take(10).ToList();
@@ -28,7 +15,15 @@
         .OrderByDescending(a => a.Views).Take(5).ToList();
     var memes = DbContext.Memes
         .OrderByDescending(m => m.Views).Take(5).ToList();
-    var picTemp = articlesByViews[0].Title;
+    var picTemp = string.Empty;
+    try
+    {
+        picTemp = articlesByViews[0].Title;
+    }
+    catch (Exception e)
+    {
+        picTemp = string.Empty;
+    }
 }
 
 <div class="main-container my-5">
@@ -66,7 +61,7 @@
                     <div class="carousel-inner">
                         @foreach (var article in articlesByViews)
                         {
-                            <div class="carousel-item @(article.Title == picTemp ? "active" : "")">
+                            <div class="carousel-item @(article.Title == picTemp && picTemp != string.Empty ? "active" : "")">
                                 <img src="@Url.Content($"~/images/articles/{article.Id}MainImg.jpg")" class="d-block w-100 img-fluid" alt="...">
                                 <div style="right: 0; left: 5%" class="custom-carousel-caption mt-5 d-md-block ">
                                     <div style="text-align: center; background: rgba(0, 0, 0, 0.4); max-width: 80px; max-height: 20px" class="mb-1 border-dark rounded-pill d-flex align-items-center">
@@ -98,18 +93,26 @@
                             </div>
                             <div class="d-block mt-3 mb-3">
                                 <p class="my-2 " style="font-size: 30px; font-weight: 700">Стань автором!</p>
-                                <a role="button" data-bs-toggle="modal" data-bs-target="#addPostModal" aria-disabled="true" class="btn btn-dark mt-3" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a role="button" data-bs-toggle="modal" data-bs-target="#addPostModal" aria-disabled="true" class="btn btn-dark mt-3" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                                }
+                                else
+                                {
+                                    <a role="button" asp-action="Login" aria-disabled="true" class="btn btn-dark mt-3" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                                }
                             </div>
                         </div>
                     </div>
                     @*News*@
                     <div class="col-xl-7 col-lg-7 col-md-12" style="padding-right: 0; padding-left: 0">
-                        @for (int i = 0; i < 2; i++)
+                        @while (articleTempIndex < 2 && articlesByViews.Count>1)
                         {
-                            <div class="d-flex @(i == 0 ? "mb-3" : "")" style="width: 100%">
-                                <img src="@($"/images/articles/{articlesByViews[i].Id}MainImg.jpg")" class="custom-news-size" />
-                                <p style="font-size: 17px; font-weight: 500" class="ms-3">@articlesByViews[articlesByViews.Count - i - 1].Title</p>
+                            <div class="d-flex @(articleTempIndex == 0 ? "mb-3" : "")" style="width: 100%">
+                                <img src="@($"/images/articles/{articlesByViews[articleTempIndex].Id}MainImg.jpg")" class="custom-news-size" />
+                                <p style="font-size: 17px; font-weight: 500" class="ms-3">@articlesByViews[articlesByViews.Count - articleTempIndex - 1].Title</p>
                             </div>
+                            @(articleTempIndex++)
                         }
                     </div>
                 </div>

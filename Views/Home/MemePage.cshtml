@@ -97,7 +97,14 @@
                 </div>
                 <div class="d-flex mt-3 mb-3 align-content-center flex-wrap">
                     <p class="my-2 mx-auto" style="font-size: 30px; font-weight: 700">Стань автором!</p>
-                    <a role="button" data-bs-toggle="modal" data-bs-target="#addPostModal" aria-disabled="true" class="btn btn-dark mt-3 mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a role="button" data-bs-toggle="modal" data-bs-target="#addPostModal" aria-disabled="true" class="btn btn-dark mt-3 mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                    }
+                    else
+                    {
+                        <a role="button" asp-action="Login" aria-disabled="true" class="btn btn-dark mt-3 mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                    }
                 </div>
             </div>
             @*Popular Memes*@

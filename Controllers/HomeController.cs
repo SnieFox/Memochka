@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.AspNetCore.Identity;
 using Memochka.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Memochka.Controllers
 {
@@ -32,7 +33,6 @@ namespace Memochka.Controllers
 
         public IActionResult MainPage() => View();
         public IActionResult Articles() => View();
-
         public async Task<IActionResult> Memes(string category, int year)
         {
             var memes = await _memeService.GetOrderedemesAsync(category, year);
@@ -43,9 +43,14 @@ namespace Memochka.Controllers
         public IActionResult MemesOffer() => View();
         public IActionResult Login() => View();
         public IActionResult Registration() => View();
+
+        [Authorize]
         public IActionResult CreateMemePage() => View();
+
+        [Authorize]
         public IActionResult CreateArticlePage() => View();
 
+        [Authorize]
         public async Task<IActionResult> ProfilePage()
         {
             var userIdentity = HttpContext.User.Identity.Name;
@@ -56,6 +61,8 @@ namespace Memochka.Controllers
             
             return View(user);
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AdminPanel()
         {
             var userIdentity = HttpContext.User.Identity.Name;
@@ -68,7 +75,7 @@ namespace Memochka.Controllers
         }
 
         #region User
-
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -90,8 +97,8 @@ namespace Memochka.Controllers
             }
             return RedirectToAction("MainPage");
         }
-
         [HttpPost]
+
         public async Task<IActionResult> Registration(User user)
         {
             var createUser = await _userServices.ValidateUserAsync(user);
@@ -120,6 +127,7 @@ namespace Memochka.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UpdateUserData(User user)
         {
             //if (!ModelState.IsValid)
@@ -137,6 +145,7 @@ namespace Memochka.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> SetProfilePicture(User user)
         {
             if (!Request.Form.Files.Any())
@@ -150,7 +159,7 @@ namespace Memochka.Controllers
         #endregion
 
         #region Meme
-
+        [Authorize]
         public async Task<IActionResult> CreateMeme(Meme meme)
         {
             var userLogin = HttpContext.User.Identity.Name;
@@ -177,11 +186,18 @@ namespace Memochka.Controllers
             return View(meme);
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> PublishMeme(int id)
+        {
+
+        }
+
         #endregion
 
         #region Article
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateArticle(Article article)
         {
             var userLogin = HttpContext.User.Identity.Name;

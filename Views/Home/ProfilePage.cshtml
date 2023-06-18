@@ -140,7 +140,10 @@
                                     <a class="d-flex text-decoration-none w-100" role="button" asp-action="MemePage" asp-route-id="@meme.Id">
                                         <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" style="width: 78px;height: 78px" />
                                         <p class="ms-3 text-black" style="font-size: 20px; font-weight: 500">@meme.Title</p>
-                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto">@meme.PublicationDate.ToString("g")</p>
+                                        <div class="d-block ms-auto h-100">
+                                            <p class="me-1 text-danger ms-auto">@(meme.IsApproved == false ? "На перевірці у модератора" : "")</p>
+                                            <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end">@meme.PublicationDate.ToString("g")</p>
+                                        </div>
                                     </a>
                                 </div>
                             }
@@ -161,7 +164,10 @@
                                     <a class="d-flex text-decoration-none w-100" role="button" asp-action="ArticlePage" asp-route-id="@article.Id">
                                         <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 78px;height: 78px" />
                                         <p class="ms-3 text-black" style="font-size: 20px; font-weight: 500">@article.Title</p>
-                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto">@article.PublicationDate.ToString("g")</p>
+                                        <div class="d-block ms-auto h-100">
+                                            <p class="me-1 text-danger ms-auto">@(article.IsApproved == false ? "На перевірці у модератора" : "")</p>
+                                            <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end">@article.PublicationDate.ToString("g")</p>
+                                        </div>
                                     </a>
                                 </div>
                             }

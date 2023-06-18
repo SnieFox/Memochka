@@ -39,97 +39,11 @@
             </div>
         </div>
         <div class="pt-3 d-block col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-3 ms-auto border-start">
-            <div class="d-flex justify-content-end">
-                <a role="button" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-dark change-data-button" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Редагувати дані</a>
-            </div>
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form asp-controller="Home" asp-action="UpdateUserData" class="pt-1">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Редагувати дані</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                @Html.HiddenFor(user => user.Id)
-                                <!-- Nickname input -->
-                                <div class="form-outline mb-4">
-                                    <label class="form-label" for="form2Example11">Username</label>
-                                    <input asp-for="Nickname" id="form2Example11" class="form-control" />
-                                    <span asp-validation-for="Nickname" class="text-danger h3" style="font-size: 15px"></span>
-                                </div>
-
-                                <!-- First Name input -->
-                                <div class="form-outline mb-4">
-                                    <label class="form-label" for="form2Example1">First Name</label>
-                                    <input asp-for="FirstName" asp- id="form2Example1" class="form-control" />
-                                    <span asp-validation-for="FirstName" class="text-danger h3" style="font-size: 15px"></span>
-                                </div>
-
-                                <!-- Password input -->
-                                <div class="form-outline mb-4">
-                                    <label class="form-label" for="form2Example2">Last Name</label>
-                                    <input asp-for="LastName" asp- id="form2Example1" class="form-control" />
-                                    <span asp-validation-for="LastName" class="text-danger h3" style="font-size: 15px"></span>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                                <button type="submit" asp-action="UpdateUserData" class="btn btn-primary">Змінити</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form asp-controller="Home" asp-action="SetProfilePicture" class="pt-1">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel1">Змінити картинку профілю</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                @Html.HiddenFor(user => user.Id)
-                                <!-- File input -->
-                                <div class="form-outline mb-4">
-                                    <label class="form-label" for="someId">Оберіть картинку</label>
-                                    <input id="someId" name="img" type="file" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                                <button type="submit" asp-action="SetProfilePicture" class="btn btn-primary">Змінити</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center mt-4">
-                <div class="d-block text-center me-5">
-                    <h4>Ім'я</h4>
-                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">@(Model.FirstName == null ? "?????" : Model.FirstName)</p>
-                </div>
-                <div class="d-block text-center">
-                    <h4>Прізвище</h4>
-                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">@(Model.LastName == null ? "?????" : Model.LastName)</p>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center mt-4">
-                <div class="text-center me-5 mt-3">
-                    <h4>Роль</h4>
-                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-danger">@Model.Role.Roles</p>
-                </div>
-                <div class="text-center mt-3">
-                    <h4>Логін</h4>
-                    <p style="font-size: 27px; font-weight: 600; font-style: italic" class="text-primary">@Model.Login</p>
-                </div>
-            </div>
             <div>
                 <div class="mt-5">
                     <p>
                         <button class="btn btn-primary w-100" style="font-size: 20px; font-weight: 500" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            Мемаси, які я залив...
+                            Мемаси на перевірку
                         </button>
                     </p>
                     <div class="collapse" id="collapseExample">
@@ -140,8 +54,11 @@
                                     <a class="d-flex text-decoration-none w-100" role="button" asp-action="MemePage" asp-route-id="@meme.Id">
                                         <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" style="width: 78px;height: 78px" />
                                         <p class="ms-3 text-black" style="font-size: 20px; font-weight: 500">@meme.Title</p>
-                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto">@meme.PublicationDate.ToString("g")</p>
                                     </a>
+                                    <div class="d-block ms-auto h-100">
+                                        <a asp-route-Id="@meme.Id" asp-action="PublishMeme" class="me-1 text-success ms-auto text-decoration-none" style="font-weight: 500">Опублікувати</a>
+                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end">@meme.PublicationDate.ToString("g")</p>
+                                    </div>
                                 </div>
                             }
                         </div>
@@ -150,7 +67,7 @@
                 <div class="mt-5">
                     <p>
                         <button class="btn btn-primary w-100" style="font-size: 20px; font-weight: 500" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
-                            Статті, що я писав...
+                            Статті на перевірку
                         </button>
                     </p>
                     <div class="collapse" id="collapseExample1">
@@ -161,8 +78,11 @@
                                     <a class="d-flex text-decoration-none w-100" role="button" asp-action="ArticlePage" asp-route-id="@article.Id">
                                         <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 78px;height: 78px" />
                                         <p class="ms-3 text-black" style="font-size: 20px; font-weight: 500">@article.Title</p>
-                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto">@article.PublicationDate.ToString("g")</p>
                                     </a>
+                                    <div class="d-block ms-auto h-100">
+                                        <a asp-route-Id="@article.Id" asp-action="PublishArticle" class="me-1 text-success ms-auto text-decoration-none" style="font-weight: 500">Опублікувати</a>
+                                        <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end">@article.PublicationDate.ToString("g")</p>
+                                    </div>
                                 </div>
                             }
                         </div>

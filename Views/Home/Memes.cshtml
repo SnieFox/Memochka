@@ -35,7 +35,14 @@
             <h1>Мемчики</h1>
             <div class="d-block ms-auto align-items-center border p-1">
                 <p class="mx-auto ps-1" style="font-size: 20px; font-weight: 600; margin-bottom: 0">Стань автором!</p>
-                <a role="button" data-bs-toggle="modal" data-bs-target="#addPostModal" aria-disabled="true" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 4px 8px;">Написати пост</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a role="button" data-bs-toggle="modal" data-bs-target="#addPostModal" aria-disabled="true" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 4px 8px;">Написати пост</a>
+                }
+                else
+                {
+                    <a role="button" asp-action="Login" aria-disabled="true" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 4px 8px;">Написати пост</a>
+                }
             </div>
         </div>
     </div>
