@@ -45,7 +45,7 @@
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form asp-controller="Home" asp-action="UpdateUserData" class="pt-1">
+                        <form asp-controller="User" asp-action="UpdateUserData" class="pt-1">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Редагувати дані</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -84,7 +84,7 @@
             <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form asp-controller="Home" asp-action="SetProfilePicture" class="pt-1" enctype="multipart/form-data">
+                        <form asp-controller="User" asp-action="SetProfilePicture" class="pt-1" enctype="multipart/form-data">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel1">Змінити картинку профілю</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -138,7 +138,7 @@
                             {
                                 <p class="me-1 text-danger mt-3 mb-0">@(meme.IsApproved == false ? "На перевірці у модератора" : "")</p>
                                 <div class="d-flex border overflow-hidden" style="max-height: 80px">
-                                    <a class="d-flex text-decoration-none w-100" role="button" asp-action="MemePage" asp-route-id="@meme.Id">
+                                    <a class="d-flex text-decoration-none w-100" role="button" asp-controller="Meme" asp-action="MemePage" asp-route-id="@meme.Id">
                                         <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" style="width: 78px;height: 78px" />
                                         <p class="ms-3 text-black" style="font-size: 20px; font-weight: 500">@meme.Title</p>
                                         <div class="d-block ms-auto h-100">
@@ -162,7 +162,7 @@
                             {
                                 <p class="me-1 text-danger mt-3 mb-0">@(article.IsApproved == false ? "На перевірці у модератора" : "")</p>
                                 <div class="d-flex border overflow-hidden" style="max-height: 80px">
-                                    <a class="d-flex text-decoration-none w-100" role="button" asp-action="ArticlePage" asp-route-id="@article.Id">
+                                    <a class="d-flex text-decoration-none w-100" role="button" asp-controller="Article" asp-action="ArticlePage" asp-route-id="@article.Id">
                                         <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 78px;height: 78px" />
                                         <p class="ms-3 text-black" style="font-size: 20px; font-weight: 500">@article.Title</p>
                                         <div class="d-block ms-auto h-100">

@@ -8,8 +8,6 @@ namespace Memochka.Services
 {
     public class ArticleService : IArticle
     {
-        //  savedDataArticleResult = savedDataArticle == 0 ? (false, "Something went wrong when adding Article to db") : (true, string.Empty);
-
         private readonly MemochkaContext _context;
         public ArticleService(MemochkaContext context) => _context = context;
         public async Task<(bool IsSuccess, string ErrorMessage)> CreateArticleAsync(Article article, string userLogin, IFormFileCollection files)

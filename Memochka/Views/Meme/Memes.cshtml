@@ -39,7 +39,7 @@
                 }
                 else
                 {
-                    <a role="button" asp-action="Login" aria-disabled="true" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 4px 8px;">Написати пост</a>
+                    <a role="button" asp-controller="User" asp-action="Login" aria-disabled="true" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 4px 8px;">Написати пост</a>
                 }
             </div>
         </div>
@@ -55,13 +55,13 @@
                     </div>
                     <div class="modal-body d-flex justify-content-center border p-1">
                         <div style="background: white; width: 50%">
-                            <a role="button" asp-action="CreateMemePage" class="d-flex flex-wrap text-center mx-auto btn">
+                            <a role="button" asp-controller="Meme" asp-action="CreateMemePage" class="d-flex flex-wrap text-center mx-auto btn">
                                 <img src="/images/LoginImage.jpg" style="width: 150px;height: 150px" class="mx-auto" />
                                 <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: black; color: white" class="mt-5 text-center mx-auto">Додати мемчик</p>
                             </a>
                         </div>
                         <div style="background: black; color: white; width: 50%">
-                            <a role="button" asp-action="CreateArticlePage" class="d-flex flex-wrap text-center mx-auto btn">
+                            <a role="button" asp-controller="Article" asp-action="CreateArticlePage" class="d-flex flex-wrap text-center mx-auto btn">
                                 <img src="/images/WhitePensil.png" style="width: 150px;height: 150px" class="mx-auto"/>
                                 <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: white; color: black" class="mt-5 text-center mx-auto">Написати статтю</p>
                             </a>
@@ -78,14 +78,14 @@
                 <div class="nav justify-content-evenly">
                     @foreach (var sect in sections)
                     {
-                        <a asp-action="Memes" asp-route-category="@sect" class="nav-link">@sect</a>
+                        <a asp-controller="Meme" asp-action="Memes" asp-route-category="@sect" class="nav-link">@sect</a>
                     }
                 </div>
                 <h4 class="fw-bold mt-3">Мемаси за роком</h4>
                 <div class="nav justify-content-evenly">
                     @foreach (var year in years)
                     {
-                        <a asp-action="Memes" asp-route-year="@year" class="nav-link">@year</a>
+                        <a asp-controller="Meme" asp-action="Memes" asp-route-year="@year" class="nav-link">@year</a>
                     }
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 @foreach(var meme in Model)
                 {
                     <div class="d-block mb-3 mt-2 memes-container h-100">
-                        <a role="button" class="text-decoration-none w-100 h-100" asp-controller="Home" asp-action="MemePage" asp-route-id="@meme.Id">
+                        <a role="button" class="text-decoration-none w-100 h-100" asp-controller="Meme" asp-action="MemePage" asp-route-id="@meme.Id">
                             <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" style="width: 90%; height: 90%" />
                             <p class="mb-3 ms-md-2 text-black" style="font-size: 18px; font-weight: 500">@meme.Title</p>
                         </a>

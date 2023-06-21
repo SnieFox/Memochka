@@ -26,13 +26,13 @@
                             <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MainPage" ? "custom-active" : (Accessor.HttpContext.Request.Path.Value == "/" ? "custom-active" : "" ) )" asp-controller="Home" asp-action="MainPage">Головна</a>
                         </li>
                         <li class="nav-item">
-                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/Memes" ? "custom-active" : "" )" asp-controller="Home" asp-action="Memes">Мемчики</a>
+                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/Memes" ? "custom-active" : "" )" asp-controller="Meme" asp-action="Memes">Мемчики</a>
                         </li>
                         <li class="nav-item">
-                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/Articles" ? "custom-active" : "" )" asp-controller="Home" asp-action="Articles">Статті</a>
+                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/Articles" ? "custom-active" : "" )" asp-controller="Article" asp-action="Articles">Статті</a>
                         </li>
                         <li class="nav-item">
-                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MemesOffer" ? "custom-active" : "" )" asp-controller="Home" asp-action="MemesOffer">Запропонушка</a>
+                            <a style="text-align: center" class="nav-link border rounded border-primary ms-2 @(Accessor.HttpContext.Request.Path.Value == "/Home/MemesOffer" ? "custom-active" : "" )" asp-controller="Meme" asp-action="MemesOffer">Запропонушка</a>
                         </li>
                     </ul>
                 </div>
@@ -45,23 +45,23 @@
                         {
                             if (User.IsInRole("Admin"))
                             {
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="ProfilePage">Profile</a></li>
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="AdminPanel">Admin Panel</a></li>
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Sign Out</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="ProfilePage">Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="AdminPanel">Admin Panel</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Logout">Sign Out</a></li>
                             }
                             else if (User.IsInRole("User"))
                             {
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="ProfilePage">Profile</a></li>
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Sign Out</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="ProfilePage">Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Logout">Sign Out</a></li>
                             }
                             else
                             {
-                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Login">Sign In</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Login">Sign In</a></li>
                             }
                         }
                         else
                         {
-                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Login">Sign In</a></li>
+                            <li><a class="dropdown-item" asp-controller="User" asp-action="Login">Sign In</a></li>
                         }
                     </ul>
                 </div>

@@ -42,13 +42,13 @@
                     </div>
                     <div class="modal-body d-flex justify-content-center border p-1">
                         <div style="background: white; width: 50%">
-                            <a role="button" asp-action="CreateMemePage" class="d-flex flex-wrap text-center mx-auto btn">
+                            <a role="button" asp-controller="Meme" asp-action="CreateMemePage" class="d-flex flex-wrap text-center mx-auto btn">
                                 <img src="/images/LoginImage.jpg" style="width: 150px;height: 150px" class="mx-auto" />
                                 <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: black; color: white" class="mt-5 text-center mx-auto">Додати мемчик</p>
                             </a>
                         </div>
                         <div style="background: black; color: white; width: 50%">
-                            <a role="button" asp-action="CreateArticlePage" class="d-flex flex-wrap text-center mx-auto btn">
+                            <a role="button" asp-controller="Article" asp-action="CreateArticlePage" class="d-flex flex-wrap text-center mx-auto btn">
                                 <img src="/images/WhitePensil.png" style="width: 150px;height: 150px" class="mx-auto"/>
                                 <p style="font-size: 20px; font-weight: 500; padding: 10px 20px; background: white; color: black" class="mt-5 text-center mx-auto">Написати статтю</p>
                             </a>
@@ -67,7 +67,7 @@
                         {
                             <div class="carousel-item @(article.Title == picTemp && picTemp != string.Empty ? "active" : "")">
                                 <img src="@Url.Content($"~/images/articles/{article.Id}MainImg.jpg")" class="d-block w-100 img-fluid" alt="...">
-                                <a asp-action="ArticlePage" asp-route-id="@article.Id">
+                                <a asp-controller="Article" asp-action="ArticlePage" asp-route-id="@article.Id">
                                     <div style="right: 0; left: 5%" class="custom-carousel-caption mt-5 d-md-block ">
                                         <div style="text-align: center; background: rgba(0, 0, 0, 0.4); max-width: 80px; max-height: 20px" class="mb-1 border-dark rounded-pill d-flex align-items-center">
                                             <i class="ms-2 bi bi-eye" style="max-width: 20px; max-height: 18px; margin-bottom: 4px"></i>
@@ -105,7 +105,7 @@
                                 }
                                 else
                                 {
-                                    <a role="button" asp-action="Login" aria-disabled="true" class="btn btn-dark mt-3" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
+                                    <a role="button" asp-controller="User" asp-action="Login" aria-disabled="true" class="btn btn-dark mt-3" style="font-size: 20px; font-weight: 500; padding: 10px 20px;">Написати пост</a>
                                 }
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                         @while (articleTempIndex < 2 && articlesByViews.Count>1)
                         {
                             <div class="d-flex @(articleTempIndex == 0 ? "mb-3" : "")" style="width: 100%">
-                                <a class="d-flex text-decoration-none w-100 h-100 border p-1" role="button" asp-action="ArticlePage" asp-route-id="@articlesByViews[articleTempIndex].Id">
+                                <a class="d-flex text-decoration-none w-100 h-100 border p-1" role="button" asp-controller="Article" asp-action="ArticlePage" asp-route-id="@articlesByViews[articleTempIndex].Id">
                                     <img src="@($"/images/articles/{articlesByViews[articleTempIndex].Id}MainImg.jpg")" class="custom-news-size" />
                                     <p style="font-size: 20px; font-weight: 500" class="ms-3 text-start text-black">@articlesByViews[articleTempIndex].Title</p>
                                 </a>
@@ -128,7 +128,7 @@
                 <div class="d-block mx-auto">
                     @foreach (var article in articlesByPublicationDate5)
                     {
-                        <a class="d-flex text-decoration-none w-100 h-100 border p-1" role="button" asp-action="ArticlePage" asp-route-id="@article.Id">
+                        <a class="d-flex text-decoration-none w-100 h-100 border p-1" role="button" asp-controller="Article" asp-action="ArticlePage" asp-route-id="@article.Id">
                             <div class="d-flex mb-3 h-100 text-decoration-none">
                                 <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 50%; height: 50%" />
                                 <p class="ms-3 text-start text-black" style="font-size: 20px; font-weight: 500">@article.Title</p>
@@ -149,7 +149,7 @@
                         {
                             <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
                                 <div class="me-auto">
-                                    <a class="d-flex text-decoration-none w-100 border p-1" role="button" asp-action="ArticlePage" asp-route-id="@article.Id">
+                                    <a class="d-flex text-decoration-none w-100 border p-1" role="button" asp-controller="Article" asp-action="ArticlePage" asp-route-id="@article.Id">
                                         <img src="@($"/images/articles/{article.Id}MainImg.jpg")" style="width: 50px;height: 50px" />
                                         <p class="ms-3 text-black text-start" style="font-size: 15px; font-weight: 500">@article.Title</p>
                                         <p class="mt-auto mb-0 me-1 text-secondary ms-auto text-end" style="font-size: 13px">@article.PublicationDate.ToString("g")</p>
@@ -169,7 +169,7 @@
                 @foreach (var meme in memes)
                 {
                     <div class="d-flex justify-content-center">
-                        <a class="d-flex text-decoration-none justify-content-center" asp-action="MemePage" asp-route-id="@meme.Id">
+                        <a class="d-flex text-decoration-none justify-content-center" asp-controller="Meme" asp-action="MemePage" asp-route-id="@meme.Id">
                             <div class="card text-light m-3 mb-0 d-flex align-items-center" style="border-width: 0">
                                 <img src="@($"/images/memes/{meme.Id}MainImg.jpg")" class="card-img d-block " style="width: 90%; max-height: 100%; max-width: 100%">
                                 <div class="card-img-overlay d-flex align-items-start">

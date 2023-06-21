@@ -7,7 +7,7 @@
         <div class="col-md-6 m-auto">
             <div class=" d-flex flex-wrap">
                 <img src="/images/LoginImage.jpg" style="width: 250px; height: 250px" class="rounded-circle my-auto"/>
-                <form asp-controller="Home" asp-action="Login" class="pt-5 ms-auto">
+                <form asp-controller="User" asp-action="Login" class="pt-5 ms-auto">
                     <span asp-validation-for="Login" class="text-danger h3" style="font-size: 15px"></span>
                     <!-- Email input -->
                     <div class="form-outline mb-4">
@@ -26,7 +26,7 @@
 
                     <!-- Register buttons -->
                     <div class="text-center">
-                        <p>Not a member? <a asp-action="Registration">Sign Up</a></p>
+                        <p>Not a member? <a asp-controller="User" asp-action="Registration">Sign Up</a></p>
                     </div>
                 </form>
             </div>
