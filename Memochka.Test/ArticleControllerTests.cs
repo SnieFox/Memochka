@@ -180,36 +180,6 @@ namespace Memochka.Test
 
         }
         
-        //[Fact]
-        //public void ArticlePage_ValidServiceResponseAndUserIsAdmin_ReturnView()
-        //{
-
-        //    // Arrange
-        //    int requestModel = 5;
-        //    _articleService
-        //        .Setup(s => s.UpArticleViewsAsync(It.IsAny<int>()))
-        //        .ReturnsAsync((true, string.Empty));
-        //    _httpContextMock
-        //        .Setup(h => h.User.IsInRole("Admin"))
-        //        .Returns(true);
-        //    var article = new Article
-        //    {
-        //        Id = requestModel,
-        //        IsApproved = true,
-        //        User = new User(),
-        //        ArticleParagraphs = new List<ArticleParagraph>()
-        //    };
-        //    _context.Articles.Add(article);
-        //    _context.SaveChanges();
-        //    // Act
-        //    var result = _controller.ArticlePage(requestModel).Result;
-
-        //    // Arrange
-        //    var viewResult = Assert.IsType<ViewResult>(result);
-        //    Assert.Equal(article, viewResult.Model);
-
-        //}
-
         [Fact]
         public void PublishArticle_InvalidServiceResponse_ReturnBadRequest()
         {
@@ -249,5 +219,37 @@ namespace Memochka.Test
             Assert.Equal("User", redirectToActionResult.ControllerName);
 
         }
+
+        [Fact]
+        public void ArticlePage_ValidServiceResponseAndUserIsAdmin_ReturnView()
+        {
+
+            // Arrange
+            int requestModel = 5;
+            _articleService
+                .Setup(s => s.UpArticleViewsAsync(It.IsAny<int>()))
+                .ReturnsAsync((true, string.Empty));
+            _httpContextMock
+                .Setup(h => h.User.IsInRole("Admin"))
+                .Returns(true);
+            var article = new Article
+            {
+                Id = requestModel,
+                Title = "SomeTitle",
+                IsApproved = true,
+                User = new User(),
+                ArticleParagraphs = new List<ArticleParagraph>()
+            };
+            _context.Articles.Add(article);
+            _context.SaveChanges();
+            // Act
+            var result = _controller.ArticlePage(requestModel).Result;
+
+            // Arrange
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.Equal(article, viewResult.Model);
+
+        }
+
     }
 }

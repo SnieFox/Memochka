@@ -6,6 +6,7 @@
     ViewData["Title"] = Model.Title;
     int temp = 1;
     var memes = DbContext.Memes
+        .Where(m=>m.IsApproved==true)
         .OrderByDescending(m => m.Views).Take(5).ToList();
 }
 

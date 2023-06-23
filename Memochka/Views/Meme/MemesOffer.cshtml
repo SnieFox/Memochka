@@ -8,6 +8,7 @@
     // Top 10 News List
     int temp = 1;
     var memes5 = DbContext.Memes
+        .Where(m => m.IsApproved == true)
         .OrderByDescending(m => m.Views).Take(5).ToList();
     var memes = DbContext.Memes
         .Include(m=>m.User)
