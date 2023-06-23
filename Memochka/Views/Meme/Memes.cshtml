@@ -2,7 +2,7 @@
 @model List<Memochka.Models.Entities.Meme>
 @inject MemochkaContext DbContext
 @{
-    ViewData["Title"] = "MemesHistory";
+    ViewData["Title"] = "Мемчики";
     // Top 10 News List
     var sections = DbContext.MemeCategories
         .Select(c => c.Category).ToList();

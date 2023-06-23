@@ -28,10 +28,17 @@ namespace Memochka.Controllers
         {
             var userLogin = HttpContext.User.Identity.Name;
             if (!Request.Form.Files.Any())
+            {
+                ModelState.AddModelError("Title", "Main Image could not be null");
                 return RedirectToAction("CreateArticlePage", article);
+            }
             var creteArticleParagraph = await _articleService.CreateArticleAsync(article, userLogin, Request.Form.Files);
             if (!creteArticleParagraph.IsSuccess)
-                return BadRequest(creteArticleParagraph.ErrorMessage);
+            {
+                ModelState.AddModelError("Title",creteArticleParagraph.ErrorMessage);
+                return RedirectToAction("CreateArticlePage", article);
+                //return BadRequest(creteArticleParagraph.ErrorMessage);
+            }
             return RedirectToAction("ProfilePage", "User");
         }
 

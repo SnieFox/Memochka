@@ -2,10 +2,8 @@
 @using Memochka.Models.MemochkaDbContext
 @model Memochka.Models.Entities.Article
 @inject MemochkaContext DbContext
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    ViewData["Title"] = Model.Title;
     int temp = 1;
     var memes = DbContext.Memes
         .OrderByDescending(m => m.Views).Take(5).ToList();

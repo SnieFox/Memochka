@@ -3,7 +3,7 @@
 @model Memochka.Models.Entities.User
 @inject MemochkaContext DbContext
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Профіль";
     var profileImage = Directory.GetFiles("wwwroot/images/users");
     var userMemes = DbContext.Memes
         .Where(u => u.UserId == Model.Id)
@@ -12,14 +12,12 @@
         .Include(a=>a.ArticleParagraphs)
         .Where(u => u.UserId == Model.Id)
         .ToList();
-    string fileExtention = string.Empty;
     bool isPictureSet = false;
     foreach (var img in profileImage)
     {
         if (img.Contains($"{Convert.ToString(Model.Id)}"))
         {
             isPictureSet = true;
-            fileExtention = img.Split(".")[1];
         }
     }
 }
@@ -31,7 +29,7 @@
                     <p class="mx-auto text-center" style="font-size: 25px; font-weight: 500">@Model.Nickname</p>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <img src="@(isPictureSet?$"/images/users/{Model.Id}.{fileExtention}":"/images/LoginImage.jpg")" style="width: 250px; height: 250px" class="rounded-circle mx-auto" />
+                    <img src="@(isPictureSet?$"/images/users/{Model.Id}.jpg":"/images/LoginImage.jpg")" style="width: 250px; height: 250px" class="rounded-circle mx-auto" />
                 </div>
                 <div class="d-flex justify-content-center">
                     <a role="button" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" class="btn btn-dark mx-auto" style="font-size: 20px; font-weight: 500; padding: 10px 20px; max-height: 54px">Додати фоточку</a>
@@ -54,21 +52,21 @@
                                 @Html.HiddenFor(user => user.Id)
                                 <!-- Nickname input -->
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="form2Example11">Username</label>
+                                    <label class="form-label" for="form2Example11">Нікнейм</label>
                                     <input asp-for="Nickname" id="form2Example11" class="form-control" />
                                     <span asp-validation-for="Nickname" class="text-danger h3" style="font-size: 15px"></span>
                                 </div>
 
                                 <!-- First Name input -->
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="form2Example1">First Name</label>
+                                    <label class="form-label" for="form2Example1">Ім'я</label>
                                     <input asp-for="FirstName" asp- id="form2Example1" class="form-control" />
                                     <span asp-validation-for="FirstName" class="text-danger h3" style="font-size: 15px"></span>
                                 </div>
 
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="form2Example2">Last Name</label>
+                                    <label class="form-label" for="form2Example2">Прізвище</label>
                                     <input asp-for="LastName" asp- id="form2Example1" class="form-control" />
                                     <span asp-validation-for="LastName" class="text-danger h3" style="font-size: 15px"></span>
                                 </div>

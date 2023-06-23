@@ -1,8 +1,13 @@
-﻿namespace Memochka.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Memochka.Models.Entities
 {
     public record Article
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Title is required")]
+        [StringLength(200, ErrorMessage = "The title cannot be more than 200 characters long")]
         public string Title { get; set; }
         public int Views { get; set; }
         public DateTime PublicationDate { get; set; }

@@ -4,7 +4,7 @@
 @model Memochka.Models.Entities.Article
 @inject MemochkaContext DbContext;
 @{
-    ViewData["Title"] = "Create Article";
+    ViewData["Title"] = "Створити статтю";
 }
 <div class="main-container my-5">
     <div class="row">
@@ -35,14 +35,14 @@
                     <!-- ArticleParagraphs Picture input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="paragraphsPictureId">Оберіть картинку</label>
-                        <input id="paragraphsPictureId" name="0" type="file" class="form-control" />
+                        <input a id="paragraphsPictureId" name="0" type="file" class="form-control" />
                     </div>
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="addParagraph()">Add Paragraph</button>
+            <button type="button" class="btn btn-primary" onclick="addParagraph()">Додати абзац</button>
 
-            <button type="submit" asp-action="CreateArticle" class="btn btn-primary">Save</button>
+            <button type="submit" asp-action="CreateArticle" class="btn btn-primary">Зберегти</button>
         </form>
     </div>
 </div>

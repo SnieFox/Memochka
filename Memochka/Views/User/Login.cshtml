@@ -1,6 +1,6 @@
 ﻿@model Memochka.Models.Entities.User
 @{
-    ViewData["Title"] = "Sign In";
+    ViewData["Title"] = "Вхід";
 }
 <div class="main-container my-5">
     <div class="row">
@@ -11,22 +11,22 @@
                     <span asp-validation-for="Login" class="text-danger h3" style="font-size: 15px"></span>
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form2Example1">Login</label>
+                        <label class="form-label" for="form2Example1">Логін</label>
                         <input asp-for="Login"id="form2Example1" class="form-control"/>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form2Example2">Password</label>
+                        <label class="form-label" for="form2Example2">Пароль</label>
                         <input asp-for="Password" type="password" id="form2Example2" class="form-control"/>
                     </div>
 
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block mb-4 w-100">Sign in</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-4 w-100">Вхід</button>
 
                     <!-- Register buttons -->
                     <div class="text-center">
-                        <p>Not a member? <a asp-controller="User" asp-action="Registration">Sign Up</a></p>
+                        <p>Not a member? <a asp-controller="User" asp-action="Registration">Реєстрація</a></p>
                     </div>
                 </form>
             </div>

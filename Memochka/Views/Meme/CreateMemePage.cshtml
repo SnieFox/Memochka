@@ -2,7 +2,7 @@
 @model Memochka.Models.Entities.Meme
 @inject MemochkaContext DbContext;
 @{
-    ViewData["Title"] = "Create Meme";
+    ViewData["Title"] = "Створити мемас";
     var categories = DbContext.MemeCategories.ToList();
 }
 <div class="main-container my-5">

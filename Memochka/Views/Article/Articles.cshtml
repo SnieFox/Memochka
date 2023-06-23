@@ -4,27 +4,8 @@
 @model Memochka.Models.Entities.Article
 @inject MemochkaContext DbContext
 @{
-    ViewData["Title"] = "News";
-    // Top 10 News List
-    var top10news = new List<News>()
-    {
-        new News(1, "Topic 1", "Desc 1", "1"),
-        new News(2, "Topic 2", "Desc 2", "12"),
-        new News(3, "Topic 3", "Desc 3", "8"),
-        new News(4, "Topic 4", "Desc 4", "6"),
-        new News(5, "Topic 5", "Desc 5", "11"),
-        new News(6, "Topic 6", "Desc 6", "13"),
-        new News(7, "Topic 7", "Desc 7", "19"),
-        new News(8, "Topic 8", "Desc 8", "15"),
-        new News(9, "Topic 9", "Desc 9", "3"),
-        new News(10, "Topic 10", "Desc 10", "10"),
-        new News(11, "Topic 11", "Desc 11", "11"),
-        new News(12, "Topic 12", "Desc 12", "13"),
-        new News(13, "Topic 13", "Desc 13", "19"),
-        new News(14, "Topic 14", "Desc 14", "114"),
-        new News(15, "Topic 15", "Desc 15", "15"),
-        new News(16, "Topic 16", "Desc 16", "16")
-    };
+    ViewData["Title"] = "Статті";
+   
     int temp = 1;
     var articles = DbContext.Articles
         .Where(a=>a.IsApproved == true)
