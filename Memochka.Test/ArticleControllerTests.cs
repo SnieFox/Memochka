@@ -161,7 +161,7 @@ namespace Memochka.Test
         {
 
             // Arrange
-            int requestModel = 5;
+            int requestModel = -1;
             _articleService
                 .Setup(s => s.UpArticleViewsAsync(It.IsAny<int>()))
                 .ReturnsAsync((true, string.Empty));

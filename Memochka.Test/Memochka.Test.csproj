@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Memochka.csproj" />
     <ProjectReference Include="..\Memochka\Memochka.csproj" />
   </ItemGroup>
 
