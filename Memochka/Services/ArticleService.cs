@@ -20,6 +20,7 @@ namespace Memochka.Services
                 var userId = await _context.Users
                     .Where(u => u.Login == userLogin)
                     .Select(u => u.Id).FirstOrDefaultAsync();
+
                 var articleDb = new Article
                 {
                     Title = article.Title,
@@ -27,30 +28,34 @@ namespace Memochka.Services
                     PublicationDate = DateTime.Now,
                     UserId = userId
                 };
+
                 await _context.Articles.AddAsync(articleDb);
                 var savedDataArticle = await _context.SaveChangesAsync();
+
                 var savedDataArticleResult = savedDataArticle == 0 ? (false, "Something went wrong when adding Article to db") : (true, string.Empty);
                 if (!savedDataArticleResult.Item1)
                     return (false, savedDataArticleResult.Item2);
 
                 int articleId = await _context.Articles.MaxAsync(a => a.Id);
-                (bool IsSuccess,string ErrorMessage) savedDataArticleParagraphResult;
                 int imageIndex = 0;
                 foreach (var paragraph in article.ArticleParagraphs)
                 {
                     if (paragraph.ParagraphTitle.IsNullOrEmpty())
                     {
                         _context.Articles.Remove(await _context.Articles
-                            .Where(a=>a.Id==articleId).FirstOrDefaultAsync());
+                            .Where(a => a.Id == articleId).FirstOrDefaultAsync());
                         await _context.SaveChangesAsync();
 
                         return (false, "All paragraphs must be filled out");
                     }
+
                     await _context.ArticleParagraphs.AddAsync(paragraph with
                     {
                         ArticleId = articleId
                     });
                     var savedDataArticleParagraph = await _context.SaveChangesAsync();
+
+                    (bool IsSuccess, string ErrorMessage) savedDataArticleParagraphResult;
                     savedDataArticleParagraphResult = savedDataArticleParagraph == 0 ? (false, "Something went wrong when adding Article Paragraph to db") : (true, string.Empty);
                     if (!savedDataArticleParagraphResult.IsSuccess)
                         return (false, savedDataArticleParagraphResult.ErrorMessage);
@@ -67,6 +72,7 @@ namespace Memochka.Services
                             "articles",
                             $"{articleId}Paragraph-{imageIndex}.jpg"
                         );
+
                         await using (var stream = new FileStream(path, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);
@@ -83,6 +89,7 @@ namespace Memochka.Services
                             "articles",
                             $"{articleId}MainImg.jpg"
                         );
+
                         await using (var stream = new FileStream(path, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);
@@ -105,9 +112,12 @@ namespace Memochka.Services
                 var article = _context.Articles
                     .Where(a => a.Id == articleId)
                     .FirstOrDefault();
+
                 article.Views++;
+
                 _context.Articles.Update(article);
                 int savedData = await _context.SaveChangesAsync();
+
                 return savedData == 0 ? (false, "Something went wrong when change article views in db") : (true, string.Empty);
             }
             catch (Exception e)
@@ -122,9 +132,12 @@ namespace Memochka.Services
                 var article = await _context.Articles.FirstOrDefaultAsync(m => m.Id == id);
                 if (article == null)
                     return (false, "Article does not exist");
+
                 article.IsApproved = true;
+
                 _context.Articles.Update(article);
                 int saved = await _context.SaveChangesAsync();
+
                 return saved == 0 ? (false, "Something went wrong when changing data in db") : (true, string.Empty);
             }
             catch (Exception e)
