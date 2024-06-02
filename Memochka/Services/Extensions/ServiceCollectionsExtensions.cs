@@ -25,6 +25,7 @@ namespace Memochka.Services.Extensions
             services.AddTransient<IUser<User>, UserService>();
             services.AddTransient<IMeme, MemeService>();
             services.AddTransient<IArticle, ArticleService>();
+            services.AddTransient<IAuthorization, AuthorizationService>();
 
             return services;
         }

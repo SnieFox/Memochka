@@ -7,18 +7,21 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Memochka.Services;
 
 namespace Memochka.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUser<User> _userServices;
+        private readonly IAuthorization _authorizationService;
         private readonly MemochkaContext _context;
 
-        public UserController(IUser<User> userServices, MemochkaContext context)
+        public UserController(IUser<User> userServices, MemochkaContext context, IAuthorization authorizationService)
         {
             _userServices = userServices;
             _context = context;
+            _authorizationService = authorizationService;
         }
 
         public IActionResult Login() => View();
@@ -56,7 +59,7 @@ namespace Memochka.Controllers
         public async Task<IActionResult> Login(User user)
         {
 
-            var loginUser = await _userServices.LoginUserAsync(user, HttpContext);
+            var loginUser = await _authorizationService.LoginUserAsync(user, HttpContext);
             if (!loginUser.Succeeded)
             {
                 foreach (var error in loginUser.Errors)
@@ -71,8 +74,8 @@ namespace Memochka.Controllers
 
         public async Task<IActionResult> Registration(User user)
         {
-            var createUser = await _userServices.ValidateUserAsync(user);
-            var loginUser = await _userServices.LoginUserAsync(user, HttpContext);
+            var createUser = await _authorizationService.ValidateUserAsync(user);
+            var loginUser = await _authorizationService.LoginUserAsync(user, HttpContext);
             if (!createUser.Succeeded)
             {
                 string errorMessge = string.Empty;
