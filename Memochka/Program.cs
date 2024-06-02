@@ -1,6 +1,7 @@
 using Memochka.Models.Entities;
 using Memochka.Models.MemochkaDbContext;
 using Memochka.Services;
+using Memochka.Services.Extensions;
 using Memochka.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -12,16 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container. 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddDbContext<MemochkaContext>(db =>
-    db.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+var sqlServerConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbServices(sqlServerConnectionString);
+
 //Add Authentication 
 builder.Services.AddAuthentication(options =>
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
-builder.Services.AddTransient<IUser<User>, UserService>();
-builder.Services.AddTransient<IMeme, MemeService>();
-builder.Services.AddTransient<IArticle, ArticleService>();
-//builder.Services.AddIdentity<User, IdentityRole>();
 
 var app = builder.Build();
 
